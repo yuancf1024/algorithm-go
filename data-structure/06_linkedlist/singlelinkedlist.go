@@ -39,14 +39,14 @@ func (this *LinkedList) InsertAfter(p *ListNode, v interface{}) bool {
 	}
 	newNode := NewListNode(v)
 
-	// 自己写的
-	newNode.next = p.next
-	p.next = newNode
+	// // 自己写的
+	// newNode.next = p.next
+	// p.next = newNode
 
 	// 参考
-	// oldNext := p.next
-	// p.next = newNode
-	// newNode.next = oldNext
+	oldNext := p.next
+	p.next = newNode
+	newNode.next = oldNext
 	this.length++
 	return true
 }
