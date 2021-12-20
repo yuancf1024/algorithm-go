@@ -17,6 +17,9 @@ func TestInsertToTail(t *testing.T) {
 	}
 	l.Print()
 }
+// 2021-12-20 下面的输出结果显然也是不对的呀，插入到尾部应该是1->2->3...
+// === RUN   TestInsertToTail
+// 1->10->9->8->7->6->5->4->3->2
 
 func TestFindByIndex(t *testing.T) {
 	l := NewLinkedList()

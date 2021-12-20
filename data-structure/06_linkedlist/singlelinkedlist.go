@@ -6,28 +6,34 @@ import "fmt"
 单链表基本操作
 */
 
+// 节点定义
 type ListNode struct {
 	next *ListNode
 	value interface{}
 }
 
+// 链表定义
 type LinkedList struct {
 	head *ListNode
 	length uint
 }
 
+// 创建节点
 func NewListNode(v interface{}) *ListNode {
 	return &ListNode{nil, v}
 }
 
+// 获取下一个节点
 func (this *ListNode) GetNext() *ListNode {
 	return this.next
 }
 
+// 获取节点的值
 func (this *ListNode) GetValue() interface{} {
 	return this.value
 }
 
+// 新建链表
 func NewLinkedList() *LinkedList {
 	return &LinkedList{NewListNode(0), 0}
 }
@@ -40,15 +46,20 @@ func (this *LinkedList) InsertAfter(p *ListNode, v interface{}) bool {
 	newNode := NewListNode(v)
 
 	// // 自己写的
-	// newNode.next = p.next
-	// p.next = newNode
+	if p.next == nil {
+		p.next = newNode
+		return true
+	} else {
+		newNode.next = p.next
+		p.next = newNode
 
-	// 参考
-	oldNext := p.next
-	p.next = newNode
-	newNode.next = oldNext
-	this.length++
-	return true
+		// 参考
+		// oldNext := p.next
+		// p.next = newNode
+		// newNode.next = oldNext
+		this.length++
+		return true
+	}
 }
 
 // 在某个节点前面插入节点
@@ -74,7 +85,7 @@ func (this *LinkedList) InsertBefore(p *ListNode, v interface{}) bool {
 	}
 	newNode := NewListNode(v) // 和在某个节点后面插入节点恰好相反
 	pre.next = newNode
-	newNode.next = cur // 为什么？
+	newNode.next = cur // 插入节点指向当前节点
 	this.length++
 	return true
 }
