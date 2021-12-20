@@ -1,0 +1,157 @@
+package double_LinkedList
+
+import "fmt"
+
+// 双向链表的实现
+
+// 节点定义
+type ListNode struct {
+	val        interface{}
+	prev, next *ListNode
+}
+
+// 新建节点
+func newNode(val interface{}) *ListNode {
+	return &ListNode{val, nil, nil}
+}
+
+// 链表定义
+type LinkedList struct {
+	head *ListNode
+	size int
+}
+
+// 新建链表
+func New() *LinkedList {
+	return &LinkedList{nil, 0}
+}
+
+//  插入数据到链表头部，并返回插入节点
+func (lis *LinkedList) PushFront(val interface{}) *ListNode {
+	node := newNode(val)
+	if lis.head != nil {
+		lis.head.prev = node
+		node.next = lis.head
+	}
+
+	lis.head = node
+	lis.size++
+	return node
+}
+
+// 插入数据到链表尾部，并返回插入节点
+func (lis *LinkedList) PushBack(val interface{}) *ListNode {
+	if lis.head == nil {
+		return lis.PushFront(val)
+	}
+
+	node := newNode(val)
+	p := lis.head
+	for p.next != nil {
+		p = p.next
+	}
+
+	p.next = node
+	node.prev = p
+	lis.size++
+	return node
+}
+
+// 在某个节点之后插入数据，并返回插入节点
+func (lis *LinkedList) PushAfter(p *ListNode, val interface{}) *ListNode {
+	if p == nil {
+		return nil
+	}
+
+	// 第一种参考实现
+	next := p.next
+	node := newNode(val)
+	node.next = next
+	p.next = node
+	node.prev = p
+	if next != nil {
+		next.prev = node
+	}
+	lis.size++
+	return node
+
+	// 大话数据结构的参考实现
+	// 测试后证明这种也是对的
+	// if p.next == nil {
+	// 	return lis.PushBack(val)
+	// } else {
+	// 	node := newNode(val)
+	// 	node.next = p.next
+	// 	node.prev = p
+	// 	p.next.prev = node
+	// 	p.next = node
+
+	// 	lis.size++
+	// 	return node
+	// }
+}
+
+// 在某个节点之前插入数据，并返回插入节点
+func (lis *LinkedList) PushBefore(p *ListNode, val interface{}) *ListNode {
+	if p == nil {
+		return nil
+	}
+
+	node := newNode(val)
+	prev := p.prev
+	if prev == nil {
+		lis.PushFront(val)
+	} else {
+		p.prev = node
+		node.next = p
+		prev.next = node
+		node.prev = prev
+		lis.size++
+	}
+	return node
+}
+
+// 删除节点
+func (lis *LinkedList) Delete(p *ListNode) {
+	if p == nil || lis.head == nil {
+		return
+	}
+
+	// 删除的是头节点
+	if p == lis.head {
+		lis.head = p.next
+	} else {
+		prev, next := p.prev, p.next
+		prev.next = next
+		if next != nil {
+			next.prev = prev
+		}
+	}
+	lis.size--
+}
+
+// 根据值查找节点
+func (lis *LinkedList) Find(val interface{}) *ListNode {
+	if lis.head == nil {
+		return nil
+	}
+
+	p := lis.head
+	for p != nil && p.val != val {
+		p = p.next
+	}
+	return p
+}
+
+// 求链表的长度
+func (lis *LinkedList) Size() int {
+	return lis.size
+}
+
+// 打印所有链表数据
+func (lis *LinkedList) PrintData() {
+	for p := lis.head; p != nil; p = p.next {
+		fmt.Print(p.val, " ")
+	}
+	fmt.Println()
+}
