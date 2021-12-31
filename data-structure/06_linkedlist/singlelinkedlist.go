@@ -8,13 +8,13 @@ import "fmt"
 
 // 节点定义
 type ListNode struct {
-	next *ListNode
+	next  *ListNode
 	value interface{}
 }
 
 // 链表定义
 type LinkedList struct {
-	head *ListNode
+	head   *ListNode
 	length uint
 }
 
@@ -45,9 +45,16 @@ func (this *LinkedList) InsertAfter(p *ListNode, v interface{}) bool {
 	}
 	newNode := NewListNode(v)
 
+	// oldNext := p.next
+	// p.next = newNode
+	// newNode.next = oldNext
+	// this.length++
+	// return true
+
 	// // 自己写的
 	if p.next == nil {
 		p.next = newNode
+		this.length++
 		return true
 	} else {
 		newNode.next = p.next
@@ -66,15 +73,15 @@ func (this *LinkedList) InsertAfter(p *ListNode, v interface{}) bool {
 
 // cur 指向当前遍历到的节点
 // pre 指向当前节点的前一个节点
-// 
+//
 func (this *LinkedList) InsertBefore(p *ListNode, v interface{}) bool {
 	if nil == p || p == this.head {
 		return false
 	}
 	cur := this.head.next // 这里的cur是什么意思?
-	pre := this.head // pre是前驱指针
-	for nil != cur { // 移动cur、pre，直到cur指向p节点
-		if cur == p { 
+	pre := this.head      // pre是前驱指针
+	for nil != cur {      // 移动cur、pre，直到cur指向p节点
+		if cur == p {
 			break
 		}
 		pre = cur
@@ -98,7 +105,7 @@ func (this *LinkedList) InsertToHead(v interface{}) bool {
 // 在链表尾部插入节点
 func (this *LinkedList) InsertToTail(v interface{}) bool {
 	cur := this.head
-	if nil != cur.next { // 将cur一直定位到尾节点
+	for cur.next != nil { // 将cur一直定位到尾节点
 		cur = cur.next
 	}
 	return this.InsertAfter(cur, v)
