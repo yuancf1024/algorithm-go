@@ -19,6 +19,7 @@ func NewArrayQueue(n int) *ArrayQueue {
 
 // 数组队列的入队
 func (this *ArrayQueue) EnQueue(v interface{}) bool {
+	// 需要考虑队列满了的情况
 	if this.tail == this.capacity {
 		return false
 	}
