@@ -233,3 +233,151 @@ func removeElement(nums []int, val int) int {
 // 官方题解：
 ```
 
+### 035-Search Insert Position
+
+**题目大意**
+
+给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
+
+你可以假设数组中无重复元素。
+
+**结题思路**
+
+- 给出一个已经从小到大排序后的数组，要求在数组中找到插入 target 元素的位置。
+- 这一题是经典的二分搜索的变种题，在有序数组中找到最后一个比 target 小的元素。
+
+```go
+// 一个思路非常强清晰的解答：
+func searchInsert(nums []int, target int) int {
+    start, end, mid := 0, len(nums)-1, 0
+    for start <= end {
+        mid = start + (end - start) >> 1
+        if nums[mid] == target {
+            return mid
+        } else if nums[mid] < target {
+            if mid == len(nums)-1 || (nums[mid+1] > target) {
+                return mid+1
+            }
+            start = mid + 1
+        } else if nums[mid] > target {
+            if mid == 0 || (nums[mid-1] < target){
+                return mid
+            }
+            end = mid -1
+        }
+    }
+    return mid
+}
+
+// leetcode 官方题解
+func searchInsert(nums []int, target int) int {
+    n := len(nums)
+    left, right := 0, n-1
+    for left <= right {
+        mid := (right - left) >> 1 + left
+        if target <= nums[mid] {
+            right = mid - 1
+        } else {
+            left = mid + 1
+        }
+    }
+    return left
+}
+
+// 大佬的解答
+func searchInsert(nums []int, target int) int {
+    low, high := 0, len(nums)-1
+    for low <= high {
+        mid := low + (high - low) >> 1
+        if nums[mid] >= target {
+            high = mid - 1
+        } else {
+            if (mid == len(nums)-1) || (nums[mid+1] >= target){
+                return mid + 1
+            }
+            low = mid + 1
+        }
+    }
+    return 0
+}
+```
+
+## 02-String
+
+## 03-Two Pointers
+
+## 04-Linked List
+
+## 05-Stack
+
+### 0020-Valid Parentheses
+
+**题目大意**
+
+给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s ，判断字符串是否有效。
+
+有效字符串需满足：
+
+1. 左括号必须用相同类型的右括号闭合。
+2. 左括号必须以正确的顺序闭合。
+
+**解题思路**
+
+遇到左括号就进栈push，遇到右括号并且栈顶为与之对应的左括号，就把栈顶元素出栈。最后看栈里面还有没有其他元素，如果为空，即匹配。
+
+需要注意，空字符串是满足括号匹配的，即输出 true。
+
+```go
+func isValid(s string) bool {
+	// 空字符串直接返回 true
+	if len(s) == 0 {
+		return true
+	}
+	stack := make([]rune, 0)
+	for _, v := range s {
+		if (v == '[') || (v == '(') || (v == '{') {
+			stack = append(stack, v)
+		} else if ((v == ']') && len(stack) > 0 && stack[len(stack)-1] == '[') ||
+		((v == ')') && len(stack) > 0 && stack[len(stack)-1] == '(') ||
+		((v == '{') && len(stack) > 0 && stack[len(stack)-1] == '{') {
+			stack = stack[:len(stack)-1]
+		} else {
+			return false
+		}
+	}
+	return len(stack) == 0
+}
+```
+
+## 06-Tree
+
+## 07-Dynamic Programming
+
+## 08-Backtracking
+
+## 09-Depth First Search
+
+## 10-Breadth First Search
+
+## 11-Binary Search
+
+## 12-Math
+
+### 029-Divide Two Integers 
+
+**题目大意**
+
+给定两个整数，被除数 dividend 和除数 divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。返回被除数 dividend 除以除数 divisor 得到的商。
+
+说明:
+
+被除数和除数均为 32 位有符号整数。
+除数不为 0。
+假设我们的环境只能存储 32 位有符号整数，其数值范围是 [−2^31,  2^31 − 1]。本题中，如果除法结果溢出，则返回 2^31 − 1。
+
+
+
+## 13-Hash Table
+
+## 14-Sorting
+
