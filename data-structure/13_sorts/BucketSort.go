@@ -2,7 +2,7 @@ package LinearSort
 
 import (
 	"fmt"
-	"github.com/yuancf1024/algorithm-go"
+	"algorithm-go/data-structure/12_sorts"
 )
 // 	// "algorithm/Sort"
 // 	// "github.com/yuancf1024/algorithm-go/data-structure/_2_sorts"
@@ -39,7 +39,7 @@ func BucketSort(a []int) {
 	for i := 0; i < num; i++ {
 		bucketLen := len(buckets[i])
 		if bucketLen > 0 {
-			QuickSort(buckets[i]) // 桶内做快速排序
+			_2_sorts.QuickSort(buckets[i]) // 桶内做快速排序
 			copy(a[tmpPos:], buckets[i])
 			tmpPos += bucketLen
 		}
