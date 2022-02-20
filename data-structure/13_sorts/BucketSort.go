@@ -4,10 +4,7 @@ import (
 	"fmt"
 	"algorithm-go/data-structure/12_sorts"
 )
-// 	// "algorithm/Sort"
-// 	// "github.com/yuancf1024/algorithm-go/data-structure/_2_sorts"
 
-// )
 // 桶排序
 
 // 获取待排序数组中的最大值
@@ -31,39 +28,39 @@ func BucketSort(a []int) {
 
 	index := 0
 	for i := 0; i < num; i++ {
-		index = a[i]*(num-1) / max // 桶序号
+		index = a[i]*(num-1) / max // 桶序号, go 的整型除法计算直接舍去小数部分
 		buckets[index] = append(buckets[index], a[i]) // 加入对应的桶中
 	}
 
 	tmpPos := 0 // 标记数组位置
 	for i := 0; i < num; i++ {
-		bucketLen := len(buckets[i])
+		bucketLen := len(buckets[i]) // 求每个桶的元素数量
 		if bucketLen > 0 {
 			_2_sorts.QuickSort(buckets[i]) // 桶内做快速排序
-			copy(a[tmpPos:], buckets[i])
-			tmpPos += bucketLen
+			copy(a[tmpPos:], buckets[i]) // 将桶内元素复制到原数组a
+			tmpPos += bucketLen // 标记后移
 		}
 	}
 }
 
 // 桶排序简单实现
 func BucketSortSimple(source []int) {
-	if len(source) <= 1 {
+	if len(source) <= 1 { // 特殊情况处理
 		return
 	}
 	array := make([]int, getMax(source)+1)
 	for i := 0; i < len(source); i++ {
-		array[source[i]] ++
+		array[source[i]] ++ // 不同索引的桶，数组元素代表数量
 	}
-	fmt.Println(array)
+	fmt.Println(array) // 索引代表值，value代表数量
 	c := make([]int, 0)
 	for i := 0; i < len(array); i++ {
 		for array[i] != 0 {
-			c = append(c, i)
-			array[i] --
+			c = append(c, i) // 将索引代表的值添加进切片
+			array[i] -- // 对应数量减一
 		}
 	}
-	copy(source, c)
+	copy(source, c) // 把数组复制到原始数组
 }
 
 
