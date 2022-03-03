@@ -69,24 +69,24 @@ func Test_preOrderTraversal(t *testing.T) {
 	}
 }
 
-// func Test_preOrderTraversal(t *testing.T) {
-// 	ast := assert.New(t)
+func Test_inOrderTraversal(t *testing.T) {
+	ast := assert.New(t)
 
-// 	for _, tc := range tcs {
-// 		fmt.Printf("~~%v~~\n", tc)
+	for _, tc := range tcs {
+		fmt.Printf("~~%v~~\n", tc)
 
-// 		root := PreIn2Tree(tc.pre, tc.in)
-// 		ast.Equal(tc.in, inOrderTraversal(root), "输入:%v", tc)
-// 	}
-// }
+		root := PreIn2Tree(tc.pre, tc.in)
+		ast.Equal(tc.in, inOrderTraversal(root), "输入:%v", tc)
+	}
+}
 
-// func Test_preOrderTraversal(t *testing.T) {
-// 	ast := assert.New(t)
+func Test_postOrderTraversal(t *testing.T) {
+	ast := assert.New(t)
 
-// 	for _, tc := range tcs {
-// 		fmt.Printf("~~%v~~\n", tc)
+	for _, tc := range tcs {
+		fmt.Printf("~~%v~~\n", tc)
 
-// 		root := PreIn2Tree(tc.pre, tc.in)
-// 		ast.Equal(tc.post, postOrderTraversal(root), "输入:%v", tc)
-// 	}
-// }
+		root := PreIn2Tree(tc.pre, tc.in)
+		ast.Equal(tc.post, postOrderTraversal(root), "输入:%v", tc)
+	}
+}
