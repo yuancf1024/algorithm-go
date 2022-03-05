@@ -15,22 +15,39 @@ type TreeNode = structures.TreeNode
  * }
  */
 
-// 解法一 递归
+// 2022-03-05自己写的, 遍历时如果没有对切片res取址会报错
 func preorderTraversal(root *TreeNode) []int {
-	res := []int{}
-	if root != nil {
-		res = append(res, root.Val)
-		tmp := preorderTraversal(root.Left)
-		for _, t := range tmp {
-			res = append(res, t)
-		}
-		tmp = preorderTraversal(root.Right)
-		for _, t := range tmp {
-			res = append(res, t)
-		}
-	}
+	var res []int
+	traversal(root, &res)
 	return res
 }
+
+func traversal(cur *TreeNode, output *[]int) {
+	if cur == nil {
+		return
+	}
+
+	*output = append(*output, cur.Val) // *output 解引用，从对应地址获取值
+	traversal(cur.Left, output) // output 本身是一个指针
+	traversal(cur.Right, output)
+}
+
+// 解法一 递归
+// func preorderTraversal(root *TreeNode) []int {
+// 	res := []int{}
+// 	if root != nil {
+// 		res = append(res, root.Val)
+// 		tmp := preorderTraversal(root.Left)
+// 		for _, t := range tmp {
+// 			res = append(res, t)
+// 		}
+// 		tmp = preorderTraversal(root.Right)
+// 		for _, t := range tmp {
+// 			res = append(res, t)
+// 		}
+// 	}
+// 	return res
+// }
 
 // 解法二 递归
 func preorderTraversal1(root *TreeNode) []int {
