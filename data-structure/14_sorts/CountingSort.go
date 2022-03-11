@@ -32,11 +32,14 @@ func CountingSort(a []int, n int) {
 
 	// 计算排序的关键步骤，有点难理解
 	for i := n - 1; i >= 0; i-- {
-		index := c[a[i]] - 1
+		index := c[a[i]] - 1 // 计数数组c：索引代表原数组元素大小，值代表元数数量
 		r[index] = a[i]
 		c[a[i]]--
 	}
 
 	// 将结果拷贝给 a 数组
-	copy(a, r)
+	// copy(a, r)
+	for i := 0; i < n; i++ {
+		a[i] = r[i]
+	}
 }

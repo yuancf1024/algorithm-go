@@ -28,6 +28,7 @@ func BucketSort(a []int) {
 
 	index := 0
 	for i := 0; i < num; i++ {
+		// example 划分为len(a)个桶
 		index = a[i]*(num-1) / max // 桶序号, go 的整型除法计算直接舍去小数部分
 		buckets[index] = append(buckets[index], a[i]) // 加入对应的桶中
 	}
