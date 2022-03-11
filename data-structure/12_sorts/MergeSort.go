@@ -56,5 +56,8 @@ func merge(arr []int, start, mid, end int) {
 		k++
 	}
 	// 将 tmp 中的数组拷贝回原始数组
-	copy(arr[start:end+1], tmpArr)
+	// copy(arr[start:end+1], tmpArr)
+	for i := 0; i <= end - start; i++ {
+		arr[start+i] = tmpArr[i]
+	}
 }

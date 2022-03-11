@@ -2,7 +2,7 @@ package LinearSort
 
 import (
 	"fmt"
-	"algorithm-go/data-structure/12_sorts"
+	"github.com/yuancf1024/algorithm-go/data-structure/12_sorts"
 )
 
 // 桶排序

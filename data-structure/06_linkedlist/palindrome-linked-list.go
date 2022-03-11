@@ -5,7 +5,7 @@ type ListNode struct {
 	Next *ListNode
 }
 */
-
+// package _6_linkedlist
 func isPalindrome(head *ListNode) bool {
 	var slow *ListNode = head
 	var fast *ListNode = head
