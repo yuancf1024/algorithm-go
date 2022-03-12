@@ -11,3 +11,10 @@ func TestRightSideView(t *testing.T) {
 	output := rightSideView(root)
 	t.Log(output)
 }
+
+func TestRightSideView1(t *testing.T) {
+	arr := []int{1, 2, 3, structures.NULL, 5, structures.NULL, 4}
+	root := structures.Ints2TreeNode(arr)
+	output := rightSideView1(root)
+	t.Log(output)
+}
