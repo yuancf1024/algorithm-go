@@ -1,11 +1,14 @@
 package binaryTree
 
-import "testing"
+import (
+	"testing"
+	"github.com/yuancf1024/algorithm-go/structures"
+)
 
 func TestPreorderTraversal(t *testing.T) {
 	
 	arr := []int{1, 2, 3}
-	root := Ints2TreeNode(arr)
+	root := structures.Ints2TreeNode(arr)
 	got := PreorderTraversal(root)
 	want := []int{1, 2, 3}
 	t.Log(got)
@@ -21,7 +24,7 @@ func TestPreorderTraversal(t *testing.T) {
 
 func TestPreorderTraversal1(t *testing.T) {
 	arr := []int{1, 2, 3}
-	root := Ints2TreeNode(arr)
+	root := structures.Ints2TreeNode(arr)
 	output := PreorderTraversal1(root)
 	t.Log(output)
 }
@@ -29,7 +32,7 @@ func TestPreorderTraversal1(t *testing.T) {
 func TestInorderTraversal(t *testing.T) {
 	
 	arr := []int{1, 2, 3}
-	root := Ints2TreeNode(arr)
+	root := structures.Ints2TreeNode(arr)
 	got := InorderTraversal(root)
 	want := []int{2, 1, 3}
 	t.Log(got)
@@ -44,7 +47,7 @@ func TestInorderTraversal(t *testing.T) {
 
 func TestInorderTraversal1(t *testing.T) {
 	arr := []int{1, 2, 3}
-	root := Ints2TreeNode(arr)
+	root := structures.Ints2TreeNode(arr)
 	output := InorderTraversal1(root)
 	t.Log(output)
 }
@@ -52,7 +55,7 @@ func TestInorderTraversal1(t *testing.T) {
 func TestPostInorderTraversal(t *testing.T) {
 	
 	arr := []int{1, 2, 3}
-	root := Ints2TreeNode(arr)
+	root := structures.Ints2TreeNode(arr)
 	got := PostorderTraversal(root)
 	want := []int{2, 3, 1}
 	t.Log(got)
@@ -67,7 +70,7 @@ func TestPostInorderTraversal(t *testing.T) {
 
 func TestPostorderTraversal1(t *testing.T) {
 	arr := []int{1, 2, 3}
-	root := Ints2TreeNode(arr)
+	root := structures.Ints2TreeNode(arr)
 	output := PostorderTraversal1(root)
 	t.Log(output)
 }
