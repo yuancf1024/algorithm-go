@@ -91,3 +91,128 @@ func InorderTraversal_i(root *TreeNode) []int {
 	}
 	return ans
 }
+
+/**
+type Element struct {
+	// 元素保管的值
+	Value interface{}
+	// 内含隐藏或非导出字段
+}
+**/
+
+// 统一风格的迭代法
+// 中序遍历：迭代+标记法
+// 中序遍历：左中右
+// 压栈顺序：右中左
+func InorderTraversal_im(root *TreeNode) []int {
+
+	if root == nil {
+		return nil
+	}
+
+	var st = list.New() // 栈
+	res := []int{} // 结果集
+	st.PushBack(root)
+	var node *TreeNode
+
+	for st.Len() > 0 {
+		e := st.Back()
+		st.Remove(e) // 弹出元素
+		if e.Value == nil { // 如果为空，则表明是需要处理中间节点
+			e = st.Back() // 弹出元素（即中间节点）
+			st.Remove(e) // 删除中间节点
+			node = e.Value.(*TreeNode)
+			res = append(res, node.Val) // 将中间节点加入到结果集中
+			continue // 继续弹出栈中下一个节点
+		}
+		node = e.Value.(*TreeNode)
+		// 压栈顺序：右中左
+		if node.Right != nil {
+			st.PushBack(node.Right)
+		}
+		st.PushBack(node) // 中间节点压栈后再压入nil作为中间节点的标志符
+		st.PushBack(nil)
+		if node.Left != nil {
+			st.PushBack(node.Left)
+		}
+	}
+	return res
+}
+
+// 前序遍历：迭代+标记法
+// 前序遍历：中左右
+// 压栈顺序：右左中
+func PreorderTraversal_im(root *TreeNode) []int {
+
+	if root == nil {
+		return nil
+	}
+
+	var st = list.New() // 栈
+	res := []int{} // 结果集
+	st.PushBack(root)
+	var node *TreeNode
+	
+	for st.Len() > 0 {
+		e := st.Back()
+		st.Remove(e) // 弹出元素
+		if e.Value == nil { // 如果为空，则表明是需要处理中间节点
+			e = st.Back() // 弹出元素（即中间节点）
+			st.Remove(e) // 删除中间节点
+			node = e.Value.(*TreeNode)
+			res = append(res, node.Val) // 将中间节点加入到结果集中
+			continue // 继续弹出栈中下一个节点
+		}
+		node = e.Value.(*TreeNode)
+		// 压栈顺序：右左中
+		if node.Right != nil {
+			st.PushBack(node.Right)
+		}
+		
+		if node.Left != nil {
+			st.PushBack(node.Left)
+		}
+		st.PushBack(node) // 中间节点压栈后再压入nil作为中间节点的标志符
+		st.PushBack(nil)
+	}
+	return res
+}
+
+// 后序遍历：迭代+标记法
+// 后序遍历：左右中
+// 压栈顺序：中右左
+func PostorderTraversal_im(root *TreeNode) []int {
+
+	if root == nil {
+		return nil
+	}
+
+	var st = list.New() // 栈
+	res := []int{} // 结果集
+	st.PushBack(root)
+	var node *TreeNode
+	
+	for st.Len() > 0 {
+		e := st.Back()
+		st.Remove(e) // 弹出元素
+		if e.Value == nil { // 如果为空，则表明是需要处理中间节点
+			e = st.Back() // 弹出元素（即中间节点）
+			st.Remove(e) // 删除中间节点
+			node = e.Value.(*TreeNode)
+			res = append(res, node.Val) // 将中间节点加入到结果集中
+			continue // 继续弹出栈中下一个节点
+		}
+		node = e.Value.(*TreeNode)
+		// 压栈顺序：中右左
+		st.PushBack(node) // 中间节点压栈后再压入nil作为中间节点的标志符
+		st.PushBack(nil)
+		if node.Right != nil {
+			st.PushBack(node.Right)
+		}
+		
+		if node.Left != nil {
+			st.PushBack(node.Left)
+		}
+	}
+	return res
+}
