@@ -1,9 +1,140 @@
 package binaryTree
 
-import "container/list"
+import (
+	"container/list"
+
+	"github.com/yuancf1024/algorithm-go/structures"
+)
+
+type TreeNode = structures.TreeNode
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
 
 // TODO: 不调用标准库实现的迭代法
 // 非递归，用栈模拟递归过程
+// 前序遍历+迭代法
+func PreorderTraversal2(root *TreeNode) []int {
+	res := []int{}
+	if root == nil {
+		return res
+	}
+
+	stack := []*TreeNode{}
+	stack = append(stack, root)
+	
+	for len(stack) != 0 {
+		l := len(stack)
+		node := stack[l-1]
+		stack = stack[:l-1] // 栈顶元素出栈,中结点先处理
+
+		if node != nil {
+			res = append(res, node.Val)
+		}
+		if node.Right != nil { // 右孩子入栈
+			stack = append(stack, node.Right)
+		}
+		if node.Left != nil { // 左孩子入栈
+			stack = append(stack, node.Left)
+		}
+	}
+	return res
+}
+
+// 后续遍历, 用栈模拟递归过程
+func PostorderTraversal2(root *TreeNode) []int {
+	res := []int{}
+	if root == nil {
+		return res
+	}
+
+	stack := []*TreeNode{} // 新建栈
+	stack = append(stack, root) // 根节点入栈
+
+	for len(stack) != 0 {
+		l := len(stack)
+		node := stack[l-1] // 栈顶出栈
+		stack = stack[:l-1]
+		// 后续遍历：左右中
+		// 反转：中右左
+		res = append(res, node.Val) // 当前节点值返回
+		if node.Left != nil {
+			stack = append(stack, node.Left)
+		}
+
+		if node.Right != nil {
+			stack = append(stack, node.Right)
+		}
+	}
+	// 反转res
+	length := len(res)
+	for i := 0; i < length/2; i++ {
+		res[i], res[length-i-1] = res[length-i-1], res[i]
+	}
+	return res
+}
+
+// 中序遍历, 用栈模拟递归过程
+// 单独用栈模拟递归实现中序遍历，稍微有点复杂
+// 和前序、后序差别很大，不好理解
+func InorderTraversal2(root *TreeNode) []int {
+	res := []int{}
+	if root == nil {
+		return res
+	}
+
+	stack := []*TreeNode{} // 不能提前将root结点入栈
+	cur := root
+
+	for cur != nil || len(stack) > 0 {
+		for cur != nil { // 先迭代访问最底层的左子树结点
+			stack = append(stack, cur)
+			cur = cur.Left
+		}
+		cur = stack[len(stack)-1] // 到达最左结点后处理栈顶结点
+		stack = stack[:len(stack)-1]
+		res = append(res, cur.Val)
+		cur = cur.Right // 取栈顶元素右结点
+	}
+	return res
+}
+
+// Go语言实现加标记的迭代法遍历二叉树，不是特别方便，因此就理解上面三种迭代法遍历吧
+
+// 迭代+标记
+// 将访问的节点放入栈中，把要处理的节点也放入栈中但是要做标记。
+// 如何标记呢，就是要处理的节点放入栈之后，紧接着放入一个空指针作为标记。
+// 中序遍历：左中右
+// 压栈顺序：右中左
+// func InorderTraversal3(root *TreeNode) []int {
+// 	if root == nil {
+// 		return nil
+// 	}
+
+// 	stack := []*TreeNode{} // 新建栈
+// 	res :=[] int{} // 结果集
+// 	stack = append(stack, root) // 根节点入栈
+// 	var node *TreeNode
+// 	for len(stack) > 0 {
+// 		e := stack[len(stack)-1]
+// 		stack = stack[:len(stack)-1] // 栈顶出栈
+// 		if e.Val == nil { //如果为空，则表明是需要处理中间节点
+// 			e = stack[len(stack)-1]
+// 			stack = stack[:len(stack)-1]
+// 			node =  e.Val.(*TreeNode)
+// 		}
+// 	}
+
+// }
+
+// NULL 方便添加测试数据
+// var NULL = -1 << 63
+/*###############调用标准库函数分割线###############*/
 
 // 迭代法前序遍历
 func PreorderTraversal_i(root *TreeNode) []int {

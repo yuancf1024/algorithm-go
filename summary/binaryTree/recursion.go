@@ -41,6 +41,23 @@ func preorder(root *TreeNode, output *[]int) {
 	}
 }
 
+// 3 不一样的递归实现, 不太好理解
+func PreorderTraversal2(root *TreeNode) []int {
+	res := []int{}
+	if root != nil {
+		res = append(res, root.Val)
+		tmp := PreorderTraversal2(root.Left)
+		for _, t := range tmp {
+			res = append(res, t)
+		}
+		tmp = PreorderTraversal2(root.Right)
+		for _, t := range tmp {
+			res = append(res, t)
+		}
+	}
+	return res
+}
+
 // 中序遍历
 // 1-递归+闭包
 func InorderTraversal(root *TreeNode) (res []int) {

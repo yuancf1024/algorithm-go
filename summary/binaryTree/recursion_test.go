@@ -29,6 +29,13 @@ func TestPreorderTraversal1(t *testing.T) {
 	t.Log(output)
 }
 
+func TestPreorderTraversal2(t *testing.T) {
+	arr := []int{1, 2, 3}
+	root := structures.Ints2TreeNode(arr)
+	output := PreorderTraversal2(root)
+	t.Log(output)
+}
+
 func TestInorderTraversal(t *testing.T) {
 	
 	arr := []int{1, 2, 3}
