@@ -1,4 +1,8 @@
 {
-    "go.inferGopath": false
+    "go.inferGopath": false,
+    "files.associations": {
+        "chrono": "cpp",
+        "algorithm": "cpp"
+    }
     // "go.inferGopath": false,
 }
