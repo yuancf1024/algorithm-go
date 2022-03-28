@@ -2,6 +2,7 @@ package structures
 
 import "fmt"
 
+// TreeNode is tree's node
 type TreeNode struct {
 	Val   int
 	Left  *TreeNode
@@ -27,7 +28,7 @@ func Ints2TreeNode(ints []int) *TreeNode {
 
 	i := 1
 	for i < n {
-		node := queue[0]
+		node := queue[0] // 头节点出队
 		queue = queue[1:]
 
 		if i < n && ints[i] != NULL {
@@ -53,11 +54,11 @@ func GetTargetNode(root *TreeNode, target int) *TreeNode {
 		return root
 	}
 
-	res := GetTargetNode(root.Left, target)
+	res := GetTargetNode(root.Left, target) // 递归左孩子
 	if res != nil {
 		return res
 	}
-	return GetTargetNode(root.Right, target)
+	return GetTargetNode(root.Right, target) // 递归右孩子
 }
 
 func indexOf(val int, nums []int) int {
