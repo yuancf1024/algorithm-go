@@ -11,7 +11,7 @@ func NewBinaryTree(rootV interface{}) *BinaryTree {
 	return &BinaryTree{NewNode(rootV)}
 }
 
-// 中序遍历的非递归实现
+// 中序遍历的非递归实现, 左中右
 func (this *BinaryTree) InOrderTraverse() {
 	p := this.root
 	s := NewArrayStack()
@@ -65,4 +65,36 @@ func (this *BinaryTree) PostOrderTraverse() {
 	for !s2.IsEmpty() {
 		fmt.Printf("%+v ", s2.Pop().(*Node).data)
 	}
+
+	fmt.Println()
+}
+
+// use one stack, pre cursor to traverse from post order
+func (this *BinaryTree) PostOrderTraverse2() {
+	r := this.root
+	s := NewArrayStack()
+
+	// point to last visit node
+	var pre *Node
+
+	s.Push(r)
+
+	for !s.IsEmpty() {
+		r = s.Top().(*Node)
+		if (r.left == nil && r.right == nil) || (pre != nil && (pre == r.left || pre == r.right)) {
+			fmt.Printf("%+v ", r.data)
+			s.Pop()
+			pre = r
+		} else {
+			if r.right != nil {
+				s.Push(r.right)
+			}
+
+			if r.left != nil {
+				s.Push(r.left)
+			}
+		}
+	}
+
+	fmt.Println()
 }
