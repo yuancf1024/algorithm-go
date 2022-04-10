@@ -23,8 +23,14 @@ Example2:
 解释：在这种情况下, 没有交易完成, 所以最大利润为 0。
 */
 
+/* Solution:
+- 题目要求找出股票中能赚的钱最多的差价
+- 这一题也有多个解法，可以用 DP，也可以用单调栈
+*/
+
 // 解法1：模拟 DP
 func maxProfit(prices []int) int {
+	// 处理特殊case，添加这个边界处理后提高了执行用时效率
 	if len(prices) < 1 {
 		return 0
 	}
@@ -43,9 +49,43 @@ func maxProfit(prices []int) int {
 	return maxProfit
 }
 
-/* Solution:
-- 题目要求找出股票中能赚的钱最多的差价
-- 这一题也有多个解法，可以用 DP，也可以用单调栈
+/* 模拟 DP
+边界处理：如果数组prices元素少于1个，那么返回0；
+把第一个元素当作最小值min，maxProfit=0；
+从第二个元素开始遍历，如果该元素减去min大于maxProfit，那么更新maxProfit；
+再判断当前元素是否比min要小，如果是，更新min。
+结束遍历，返回maxProfit。
 */
 
-// 解法2：单调栈
+// 解法2：单调栈, 可能不太好理解
+func maxProfit1(prices []int) int {
+	n := len(prices)
+	if n == 0 {
+		return 0
+	}
+
+	stack, res := []int{prices[0]}, 0
+	for i := 1; i < n; i++ {
+		if prices[i] > stack[len(stack) - 1] {
+			stack = append(stack, prices[i])
+		} else {
+			index := len(stack) - 1
+			for ; index >= 0; index-- {
+				if stack[index] < prices[i] {
+					break
+				}
+			}
+			stack = stack[:index + 1]
+			stack = append(stack, prices[i])
+		}
+		res = max(res, stack[len(stack)-1] - stack[0])
+	}
+	return res
+}
+
+func max(a int, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
