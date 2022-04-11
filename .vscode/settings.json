@@ -4,7 +4,9 @@
         "chrono": "cpp",
         "algorithm": "cpp",
         "iostream": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "unordered_map": "cpp",
+        "map": "cpp"
     }
     // "go.inferGopath": false,
 }
