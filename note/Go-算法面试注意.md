@@ -1,5 +1,36 @@
 # Go-算法面试注意
 
+## leetcode 刷题注意
+
+### Go
+
+1. []int 的使用
+
+```go
+// 使用1： 直接定义切片，不指定长度，可以使用append往里面添加元素
+res := []int{}
+res = append(res, row[i])
+
+// 使用2： 定义切片的同时指定长度，使用索引向里面添加元素
+res := make([]int, len(nums))
+res[i] = i
+
+```
+
+2. map 
+
+**用法同切片**
+定义时，可不声明长度
+
+```go
+m := make(map[int]int) // key 对应数组元素，value 对应 元素在数组的下标
+m[v] = k
+
+// 删除元素
+delete(m, v)
+```
+
+
 ## 算法思维
 
 * 进入函数优先考虑边界
