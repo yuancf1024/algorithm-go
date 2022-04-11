@@ -18,10 +18,10 @@ func generate(numRows int) [][]int {
 		for j := 0; j < i+1; j++ {
 			if j == 0 || j == i {
 				row = append(row, 1)
-			} 
-			
-			if i > 1 {
-				row = append(row, res[i-1][j-1] + res[i-1][j])
+			} else if i > 1 { 
+				// 这个if语句单独列出来会报错,如果单独列出来的话
+				// if j is 0 you still enter this block as long as i > 1
+				row = append(row, res[i-1][j-1]+res[i-1][j])
 			}
 		}
 		res = append(res, row)
