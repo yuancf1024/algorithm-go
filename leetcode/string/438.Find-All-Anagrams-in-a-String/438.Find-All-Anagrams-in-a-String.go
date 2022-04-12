@@ -111,7 +111,7 @@ func findAnagrams_v1(s string, p string) []int {
 空间复杂度：O(Σ)。用于存储字符串 p 和滑动窗口中每种字母的数量。
 */
 
-// leetcode 题解：优化的滑动窗口 
+// leetcode 题解：优化的滑动窗口 （不好理解）
 func findAnagrams_v2(s string, p string) []int {
 	ans := []int{}
 	sLen, pLen := len(s), len(p)
