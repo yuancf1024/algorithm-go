@@ -15,7 +15,7 @@ func checkInclusion(s1 string, s2 string) bool {
 		return false
 	}
 
-	for i := 0; i < s1Len; i++ {
+	for i := 0; i < s1Len; i++ { // 遍历字符串s1，统计每个字符的频数
 		freq[s1[i] - 'a']++
 	}
 
