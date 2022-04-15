@@ -1,5 +1,6 @@
 package main
 
+import "math"
 /*
 - 2022-03-26 该程序的C++版本可以正常运行，但是用Go实现的版本无法运行出正确结果。
 可能是Go语言和C++在某些方面存在语言特性的差异。但是目前还没有发现造成这个结果的具体原因。
@@ -56,13 +57,26 @@ func main() {
 		}
 
 		// 确认输入是否正确
-		fmt.Println(n)
-		fmt.Println(work)
-		fmt.Println(gym)
+		// fmt.Println(n)
+		// fmt.Println(work)
+		// fmt.Println(gym)
 		// fmt.Println(res)
 		// 处理逻辑
 
-		dp := [10][3]int{}
+		// dp := [10][3]int{} // 数组是不可变的，注意Go语言里面Slice和C++中vector的区别
+		// 本题要求最小休息天数，那么数组在初始化时，应该把元素全部置为最大，因为我们的DP数组使用了min
+		dp := make([][]int, n+1)
+		for i := range dp {
+			dp[i] = make([]int, 3)
+		}
+
+		for i := 0; i < n+1; i++ {
+			for j := 0; j < 3; j++ {
+				dp[i][j] = math.MaxInt32
+			}
+		}
+		
+		// fmt.Println(dp)
 		dp[0][0], dp[0][1], dp[0][2] = 0, 0, 0
 
 		for i := 1; i <= n; i++ {
@@ -76,22 +90,20 @@ func main() {
 				dp[i][2] = min(dp[i-1][0], dp[i-1][1])
 			}
 
-			dp[i][0] = min(dp[i-1][0], min(dp[i-1][1], dp[i-1][2])) + 1 // 休息多一天
+			dp[i][0] = (min(dp[i-1][0], min(dp[i-1][1], dp[i-1][2])) + 1) // 休息多一天
 		}
 
 		res := min(dp[n][0], min(dp[n][1], dp[n][2]))
 		fmt.Println(res)
-		fmt.Println(dp)
+		// fmt.Println(dp)
 	}
 }
 
 func min(x, y int) int {
 	if x <= y {
 		return x
-	} else {
-		return y
 	}
-
+	return y
 }
 
 /*
