@@ -1,5 +1,7 @@
 package leetcode
 
+// import "math"
+
 /* 542. 01 矩阵
 给定一个由 0 和 1 组成的矩阵 mat ，请输出一个大小相同的矩阵，
 其中每一个格子是 mat 中对应位置元素到最近的 0 的距离。
@@ -31,7 +33,7 @@ package leetcode
 第二次循环从下到上，从右到左遍历，再处理右边和下边。
 */ 
 
-// 解法1：BFS 广度优先搜索
+// 解法1：BFS 广度优先搜索 halfrost大佬的解法（不易理解）
 func updateMatrix(mat [][]int) [][]int {
 	res := make([][]int, len(mat))
 	if len(mat) == 0 || len(mat[0]) == 0 {
@@ -84,3 +86,149 @@ func updateMatrix(mat [][]int) [][]int {
 	return res
 }
 
+// 参考：Sweetiee 的BFS 非常容易理解
+// https://leetcode-cn.com/problems/01-matrix/solution/2chong-bfs-xiang-jie-dp-bi-xu-miao-dong-by-sweetie/
+
+func updateMatrix_BFS(mat [][]int) [][]int {
+	// mat 全为0的特殊case
+	res := make([][]int, len(mat))
+	if len(mat) == 0 || len(mat[0]) == 0 {
+		return res
+	}
+
+	// 首先将所有的 0 都入队，并且将 1 的位置设置成 -1，表示该位置是 未被访问过的 1
+	queue := make([][]int, 0)
+	for i := range mat {
+		res[i] = make([]int, len(mat[0]))
+		for j := range res[i] {
+			if mat[i][j] == 0 {
+				queue =append(queue, []int{i, j}) // 队列存储的是值为0的坐标
+			} else {
+				res[i][j] = -1
+			}
+		}
+	}
+
+	var dir = [][]int{{-1, 0}, {0, 1}, {1, 0}, {0, -1}} // 上下左右四个方向
+	for len(queue) > 0 { // 为0的队列不为空
+		node := queue[0]
+		queue = queue[1:] // 弹出队首元素
+		x, y := node[0], node[1]
+		// BFS 试探四个方向
+		for i := 0; i < 4; i++ {
+			newX := x + dir[i][0]
+			newY := y + dir[i][1]
+			// 如果四个邻域的点是-1，表示这个点是未被访问过的1
+			// 所以这个点到0的距离就可以更新成res[x][y]+1
+			if newX >= 0 && newX < len(mat) && newY >= 0 && newY < len(mat[0]) &&
+			res[newX][newY] == -1 {
+				res[newX][newY] = res[x][y] + 1 // 在试探元素之前的坐标的基础上加1
+				queue = append(queue, []int{newX, newY}) // 将非0的坐标加入队列
+			}
+		}
+	}
+	return res
+}
+/*
+思路：
+● 首先把每个源点 0 入队，然后从各个 0 同时开始一圈一圈的向 1 扩散
+（每个 1 都是被离它最近的 0 扩散到的 ），扩散的时候可以设置 int[][] dist 
+来记录距离（即扩散的层次）并同时标志是否访问过。对于本题是可以直接修改
+原数组 int[][] matrix 来记录距离和标志是否访问的，这里要注意先把 
+matrix 数组中 1 的位置设置成 -1 （设成Integer.MAX_VALUE啦，m * n啦，
+10000啦都行，只要是个无效的距离值来标志这个位置的 1 没有被访问过就行辣~）
+
+复杂度分析：
+● 每个点入队出队一次，所以时间复杂度：O(n * m)
+● 虽然我们是直接原地修改的原输入数组来存储结果，但最差的情况下即全都是 0 
+时，需要把 m * n个 0 都入队，因此空间复杂度是 O(n∗m)
+*/
+
+// 参考：Sweetiee 的DP
+func updateMatrix_DP(mat [][]int) [][]int {
+	m, n := len(mat), len(mat[0])
+	dp := make([][]int, m)
+	for i := 0; i < m; i++ {
+		dp[i] = make([]int, n)
+	}
+	if m == 0 || n == 0 {
+		return dp
+	}
+
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ { // 这里错误的把j初始化为1，所以卡了半天bug
+			if mat[i][j] == 1 {
+				dp[i][j] = 10000
+			}
+		}
+	}
+
+	// 从左上角开始
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			if (i - 1 >= 0) {
+				dp[i][j] = min(dp[i][j], dp[i-1][j] + 1)
+			}
+			if (j - 1 >= 0) {
+				dp[i][j] = min(dp[i][j], dp[i][j-1] + 1)
+			}
+		}
+	}
+
+	// 从右下角开始
+	for i := m-1; i >= 0; i-- {
+		for j := n-1; j >= 0; j-- {
+			if (i + 1 < m) {
+				dp[i][j] = min(dp[i][j], dp[i+1][j] + 1)
+			}
+			if (j + 1 < n) {
+				dp[i][j] = min(dp[i][j], dp[i][j+1] + 1)
+			}
+		}
+	}
+	return dp
+}
+
+
+func min (x, y int) int {
+	if x < y {
+		return x
+	}
+	return y
+}
+
+
+// 其他人的DP实现
+func updateMatrix_DP1(matrix [][]int) [][]int {
+	m, n := len(matrix), len(matrix[0])
+	out := make([][]int, m)
+	for i := 0; i < m; i++ {
+		out[i] = make([]int, n)
+		for j := 0; j < n; j++ {
+			if matrix[i][j] != 0 {
+				out[i][j] = 10000
+				if i != 0 {
+					out[i][j] = min(out[i][j], out[i-1][j]+1)
+				}
+				if j != 0 {
+					out[i][j] = min(out[i][j], out[i][j-1]+1)
+				}
+			} else {
+				out[i][j] = 0
+			}
+		}
+	}
+	for i := m - 1; i >= 0; i-- {
+		for j := n - 1; j >= 0; j-- {
+			if out[i][j] > 1 {
+				if i < m-1 {
+					out[i][j] = min(out[i][j], out[i+1][j]+1)
+				}
+				if j < n-1 {
+					out[i][j] = min(out[i][j], out[i][j+1]+1)
+				}
+			}
+		}
+	}
+	return out
+}
