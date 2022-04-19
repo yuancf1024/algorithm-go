@@ -7,6 +7,7 @@ import (
 )
 
 type TreeNode = structures.TreeNode
+
 /**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -27,7 +28,7 @@ func PreorderTraversal2(root *TreeNode) []int {
 
 	stack := []*TreeNode{}
 	stack = append(stack, root)
-	
+
 	for len(stack) != 0 {
 		l := len(stack)
 		node := stack[l-1]
@@ -53,7 +54,7 @@ func PostorderTraversal2(root *TreeNode) []int {
 		return res
 	}
 
-	stack := []*TreeNode{} // 新建栈
+	stack := []*TreeNode{}      // 新建栈
 	stack = append(stack, root) // 根节点入栈
 
 	for len(stack) != 0 {
