@@ -1,6 +1,6 @@
 package leetcode
 
-// import "math"
+import "math"
 
 /* 542. 01 矩阵
 给定一个由 0 和 1 组成的矩阵 mat ，请输出一个大小相同的矩阵，
@@ -146,7 +146,7 @@ matrix 数组中 1 的位置设置成 -1 （设成Integer.MAX_VALUE啦，m * n�
 
 // 参考：Sweetiee 的DP
 func updateMatrix_DP(mat [][]int) [][]int {
-	m, n := len(mat), len(mat[0])
+	m, n := len(mat), len(mat[0]) // 矩阵的行列大小
 	dp := make([][]int, m)
 	for i := 0; i < m; i++ {
 		dp[i] = make([]int, n)
@@ -158,7 +158,7 @@ func updateMatrix_DP(mat [][]int) [][]int {
 	for i := 0; i < m; i++ {
 		for j := 0; j < n; j++ { // 这里错误的把j初始化为1，所以卡了半天bug
 			if mat[i][j] == 1 {
-				dp[i][j] = 10000
+				dp[i][j] = 10000 // 其他很大的值也行
 			}
 		}
 	}
@@ -232,3 +232,45 @@ func updateMatrix_DP1(matrix [][]int) [][]int {
 	}
 	return out
 }
+
+// halfrost大佬的DP，不是很好理解
+func updateMatrixDP(matrix [][]int) [][]int {
+	for i, row := range matrix {
+		for j, val := range row {
+			if val == 0 {
+				continue
+			}
+			left, top := math.MaxInt16, math.MaxInt16
+			if i > 0 {
+				top = matrix[i-1][j] + 1
+			}
+			if j > 0 {
+				left = matrix[i][j-1] + 1
+			}
+			matrix[i][j] = min(top, left)
+		}
+	}
+	for i := len(matrix) - 1; i >= 0; i-- {
+		for j := len(matrix[0]) - 1; j >= 0; j-- {
+			if matrix[i][j] == 0 {
+				continue
+			}
+			right, bottom := math.MaxInt16, math.MaxInt16
+			if i < len(matrix)-1 {
+				bottom = matrix[i+1][j] + 1
+			}
+			if j < len(matrix[0])-1 {
+				right = matrix[i][j+1] + 1
+			}
+			matrix[i][j] = min(matrix[i][j], min(bottom, right))
+		}
+	}
+	return matrix
+}
+
+// func min(a int, b int) int {
+// 	if a > b {
+// 		return b
+// 	}
+// 	return a
+// }
