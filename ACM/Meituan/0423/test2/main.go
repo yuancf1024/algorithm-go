@@ -21,34 +21,11 @@ no
 370 371
 */
 
-// int main(){
-//     int m,n;
-//     while(scanf("%d%d",&m,&n)!=EOF){
-//             int t=0;
-//         for(int i=m; i<=n; i++){
-//             int a=i/100;
-//             int b=i%100/10;
-//             int c=i%10;
-            
-//             if(i==a*a*a+b*b*b+c*c*c && t==0){
-//                 printf("%d ",i);
-//                 t++;
-//             }
-//             else if(i==a*a*a+b*b*b+c*c*c && t==1){
-//                 printf("%d ",i);
-//             }
-//         }
-//         if(t!=0){ printf("\n"); }
-//         if(t==0){ printf("no\n"); }
-//     }
-//     return 0;
-// }
-
 func main() {
 	m := 0
 	n := 0
 	for {
-		_, err := fmt.Scanf("%f%d", &m, &n)
+		_, err := fmt.Scanf("%d%d", &m, &n)
 		if err != nil {
 			if err == io.EOF {
 				break
@@ -64,7 +41,7 @@ func main() {
 				if (i == a*a*a + b*b*b + c*c*c) && t == 0 {
 					fmt.Printf("%d ", i)
 					t++;
-				} else if (i == a*a*a + b*b*b + c*c*c) && t == 0 {
+				} else if (i == a*a*a + b*b*b + c*c*c) && t == 1 {
 					fmt.Printf("%d ", i)
 				}
 			}
