@@ -82,7 +82,19 @@ math.MinInt32
   - `printf`: 使用占位符格式化打印结果
 
 
+### 字符串和整数的转化
 
+- string转成int：
+`int, err := strconv.Atoi(string)`
+
+- string转成int64：
+`int64, err := strconv.ParseInt(string, 10, 64)`
+
+- int转成string：
+`string := strconv.Itoa(int)`
+
+- int64转成string：
+`string := strconv.FormatInt(int64,10)`
 
 
 ## 牛客网面试注意
