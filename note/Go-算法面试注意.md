@@ -59,6 +59,8 @@ rand.Seed(time.Now().UnixNano())
 rand.Int()
 
 sort.Int()
+
+sort.Ints() // Ints sorts a slice of ints in increasing order.
 sort.Slice(x, func(i, j int)bool {
     // 降序
     return x[i]>x[j]

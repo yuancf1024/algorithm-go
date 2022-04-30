@@ -2,28 +2,39 @@ package leetcode
 
 import "sort"
 
+/* 15. 三数之和
+给你一个包含 n 个整数的数组 nums，
+判断 nums 中是否存在三个元素 a，b，c ，
+使得 a + b + c = 0 ？
+请你找出所有和为 0 且不重复的三元组。
+注意：答案中不可以包含重复的三元组。
+*/
+
+
 // 解法一 最优解，双指针 + 排序
 func threeSum(nums []int) [][]int {
-	sort.Ints(nums)
-	result, start, end, index, addNum, length := make([][]int, 0), 0, 0, 0, 0, len(nums)
+	sort.Ints(nums) // 对原始数组排序
+	result := make([][]int, 0)
 
-	for index = 1; index < length - 1; index++ {
+	start, end, index, addNum, length := 0, 0, 0, 0, len(nums)
+
+	for index = 1; index < length - 1; index++ { // index 固定在正中间
 		start, end = 0, length - 1
 		if index > 1 && nums[index] == nums[index-1] {
 			start = index - 1
 		}
-		for start < index && end > index {
-			if start > 0 && nums[start] == nums[start-1] {
+		for start < index && end > index { 
+			if start > 0 && nums[start] == nums[start-1] { // 去重
 				start++
 				continue
 			}
-			if end < length-1 && nums[end] == nums[end+1] {
+			if end < length-1 && nums[end] == nums[end+1] { // 去重
 				end--
 				continue
 			}
 			addNum = nums[start] + nums[end] + nums[index]
 			if addNum == 0 {
-				result = append(result, []int{nums[start], nums[end], nums[index]})
+				result = append(result, []int{nums[start], nums[index], nums[end]})
 				start++
 				end--
 			} else if addNum > 0 {
