@@ -13,15 +13,15 @@ func maxProduct318(words []string) int {
 		return 0
 	}
 	length, value, maxProduct := len(words), make([]int, len(words)), 0
-	for i := 0; i < length; i++ {
+	for i := 0; i < length; i++ { // 遍历数组中的每个字符串
 		tmp := words[i]
 		value[i] = 0
-		for j := 0; j < len(tmp); j++ {
+		for j := 0; j < len(tmp); j++ { // 对字符串编码成二进制数
 			value[i] |= 1 << (tmp[j] - 'a') // 与运算可以保留已遍历过的j位上面的符号
 		}
 	}
 	for i := 0; i < length; i++ {
-		for j := i + 1; j < length; j++ {
+		for j := i + 1; j < length; j++ { // 遍历相邻字符串，判断他们之间是否有相同公共字母，以及2个字符串长度的乘积
 			if (value[i] & value[j]) == 0 && (len(words[i]) * len(words[j]) > maxProduct) {
 				maxProduct = len(words[i]) * len(words[j])
 			}
