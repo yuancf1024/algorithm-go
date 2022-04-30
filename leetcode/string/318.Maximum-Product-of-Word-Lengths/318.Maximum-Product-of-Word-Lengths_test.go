@@ -46,7 +46,7 @@ func Test_Problem318(t *testing.T) {
 
 	for _, q := range qs {
 		_, p := q.ans318, q.para318
-		fmt.Printf("【input】:%v       【output】:%v\n", p, maxProduct318(p.one))
+		fmt.Printf("【input】:%v       【output】:%v\n", p, maxProduct318_v2(p.one))
 	}
 	fmt.Printf("\n\n\n")
 }

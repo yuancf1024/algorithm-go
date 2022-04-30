@@ -7,6 +7,7 @@ length(words[i]) * length(words[j]) 的最大值，
 如果不存在这样的两个单词，返回 0 。
 */
 
+// 二进制编码字符串
 func maxProduct318(words []string) int {
 	// 边界条件的处理
 	if words == nil || len(words) == 0 {
@@ -28,6 +29,52 @@ func maxProduct318(words []string) int {
 		}
 	}
 	return maxProduct
+}
+
+// 使用哈希表记录字符串中出现的字符
+func maxProduct318_v2(words []string) int {
+
+	// 边界条件的处理
+	if len(words) == 0 || words == nil {
+		return 0
+	}
+	// 生成二维切片
+	length := len(words)
+	flags := make([][]bool, length) // 行
+	for i := range flags {
+		flags[i] = make([]bool, 26) // 列
+	}
+	for i := 0; i < length; i++ { // 遍历words中每个字符串，使用一个哈希表记录字符串中a-z字符是否出现
+		tmp := words[i]
+		for j := 0; j < len(tmp); j++ {
+			flags[i][tmp[j] - 'a'] = true
+		}
+	}
+
+	res := 0
+	for i := 0; i < length; i++ {
+		for j := i + 1; j < length; j++ {
+			k := 0
+			for ; k < 26; k++ {
+				if flags[i][k] && flags[j][k] { // 判断字符串words[i] words[j] 是否有相同字母
+					break;
+				}
+			}
+
+			if k == 26 { // 更新最大值
+				maxProduct := len(words[i]) * len(words[j])
+				res = max(res, maxProduct)
+			}
+		}
+	}
+	return res
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
 }
 
 /* 解题思路
