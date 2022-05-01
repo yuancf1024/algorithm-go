@@ -68,43 +68,62 @@ func removeNthFromEnd_v1(head *ListNode, n int) *ListNode {
 那么前一个指针就是倒数第 n 个节点了。
 */
 
-// 解法1
+// 参考剑指offer，双指针易理解版本
+// 未考虑 n 大于链表节点数的特殊情形
 func removeNthFromEnd(head *ListNode, n int) *ListNode {
+    dummy := &ListNode{Val: 0}
+    dummy.Next = head
+    slow, fast := dummy, head // slow比fast要慢一步
+    for i := 0; i < n; i++ { // fast移动了n步
+        fast = fast.Next
+    }
+    for fast != nil { //    fast 会走出链表，slow比fast慢n步
+        fast = fast.Next
+        slow = slow.Next
+    } // fast走出了链表，slow指向倒数第n+1个节点，跳过第n个节点
+    slow.Next = slow.Next.Next
+    // slow.Next = nil // 可省略
+    return dummy.Next
+}
+
+// 解法1 参考halfrost
+func removeNthFromEnd1(head *ListNode, n int) *ListNode {
 	dummyHead := &ListNode{Next: head} // 包含了删除头节点的case
 	preSlow, slow, fast := dummyHead, head, head
 	for fast != nil {
 		if n <= 0 {
-			preSlow = slow
+			preSlow = slow // slow比preSlow快一个节点
 			slow = slow.Next
 		}
 		n--
 		fast = fast.Next
 	}
-	preSlow.Next = slow.Next // 删除节点
+	preSlow.Next = slow.Next // 删除节点 slow
+
 	return dummyHead.Next
 }
 
 // 解法二， 对于n 大于链表节点数的特殊情形也可以通过
 func removeNthFromEnd_v2(head *ListNode, n int) *ListNode {
-	if head == nil {
+	if head == nil { // 输入链表头节点为空
 		return nil
 	}
 
-	if n <= 0 {
+	if n <= 0 { // n为负数的情况
 		return head
 	}
 
 	current := head
 	len := 0
-	for current != nil {
+	for current != nil { // 计算链表长度
 		len++
 		current = current.Next
 	}
-	if n > len {
+	if n > len { // n 大于 链表长度的情况，相当于没有删除节点
 		return head
 	}
 
-	if n == len {
+	if n == len { // 删除头节点的情况，头节点指向空，返回head.Next
 		current := head
 		head = head.Next
 		current.Next = nil
