@@ -18,6 +18,23 @@ type ListNode = structures.ListNode
  * }
  */
 
+// 参考剑指offer的实现
+func reverseList_v1(head *ListNode) *ListNode {
+    if head == nil || head.Next == nil {
+        return head
+    }
+    // prev := &ListNode{} // 初始化默认为0节点
+    var prev *ListNode // 空节点，nil，节点类型, 反转后链表最后一个节点的指向为nil
+    cur := head
+    for cur != nil { // cur指向当前遍历到的节点
+        next := cur.Next // next记录cur的下一个节点
+        cur.Next = prev // cur指向前一个结点
+        prev = cur // prev 后移一个结点
+        cur = next // cur后移
+    }
+    return prev // prev最终是链表的尾结点即反转链表的头节点
+}
+
 // 方法1：迭代
 func reverseList(head *ListNode) *ListNode {
     var behind *ListNode
