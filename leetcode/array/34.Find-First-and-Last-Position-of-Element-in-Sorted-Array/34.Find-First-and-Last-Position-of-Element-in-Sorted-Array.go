@@ -20,6 +20,35 @@ package leetcode
 输出：[-1,-1]
 */
 
+// 引入一个bool变量标识寻找左边界or右边界
+func searchRange_v1(nums []int, target int) []int {
+    res := []int{-1, -1}
+    res[0] = binarySearch(nums, target, true)
+    res[1] = binarySearch(nums, target, false)
+    return res
+}
+
+func binarySearch(nums []int, target int, leftOrRight bool) int {
+    res := -1
+    left, right := 0, len(nums)-1
+    for left <= right {
+        mid := left + ((right - left) >> 1)
+        if target < nums[mid] {
+            right = mid - 1
+        } else if target > nums[mid] {
+            left = mid + 1
+        } else {
+            res = mid
+            if leftOrRight {
+                right = mid - 1  // 向左收缩
+            } else {
+                left = mid + 1 // 向右收缩
+            }
+        }
+    }
+    return res
+}
+
 // 2022-04-25自己实现
 // func searchRange(nums []int, target int) []int {
 // 	left, right := 0, len(nums) - 1
