@@ -62,7 +62,7 @@ func Test_Problem27(t *testing.T) {
 
 	for _, q := range qs {
 		_, p := q.ans27, q.para27
-		fmt.Printf("【input】:%v    【output】:%v\n", p.one, removeElement(p.one, p.two))
+		fmt.Printf("【input】:%v    【output】:%v\n", p.one, removeElement_v1(p.one, p.two))
 	}
 	fmt.Printf("\n\n\n")
 }
