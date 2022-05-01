@@ -1,12 +1,28 @@
 package leetcode
 
-/*
+/* 283.移动零
 给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，
 同时保持非零元素的相对顺序。
 请注意 ，必须在不复制数组的情况下原地对数组进行操作。
 
 进阶：你能尽量减少完成的操作次数吗？
 */
+
+// 易于理解的双指针实现
+func moveZeroes_v1(nums []int) {
+	if len(nums) < 2 {
+		return
+	}
+	slow, fast := 0, 0
+	for ; fast < len(nums); fast++ {
+		if nums[fast] != 0 {
+			if fast != slow {
+				nums[slow], nums[fast] = nums[fast], nums[slow]
+			}
+			slow++
+		}
+	}
+}
 
 // 双指针（很巧妙）
 func moveZeroes(nums []int) {

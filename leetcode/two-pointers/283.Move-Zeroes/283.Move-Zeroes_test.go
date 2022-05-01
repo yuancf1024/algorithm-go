@@ -62,7 +62,7 @@ func Test_Problem283(t *testing.T) {
 	for _, q := range qs {
 		_, p := q.ans283, q.para283
 		fmt.Printf("【input】:%v      ", p.one)
-		moveZeroes(p.one)
+		moveZeroes_v1(p.one)
 		fmt.Printf("【output】:%v\n", p.one)
 	}
 	fmt.Printf("\n\n\n")
