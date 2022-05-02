@@ -22,7 +22,8 @@ func eraseOverlapIntervals(intervals [][]int) int {
 
 	n := len(intervals)
 	// 排序
-	sort.Sort(Intervals(intervals))
+	// sort.Sort(Intervals(intervals))
+	sort.Slice(intervals, func(i, j int) bool { return intervals[i][1] < intervals[j][1] })
 	removed := 0
 	prev := intervals[0][1]
 	for i := 1; i < n; i++ {
@@ -35,29 +36,29 @@ func eraseOverlapIntervals(intervals [][]int) int {
 	return removed
 }
 
-// Intervals define
-type Intervals [][]Intervals
+// // Intervals define
+// type Intervals [][]Intervals
 
-func (a Intervals) Len() int {
-	return len(a)
-}
+// func (a Intervals) Len() int {
+// 	return len(a)
+// }
 
-func (a Intervals) Swap(i, j int) {
-	a[i], a[j] = a[j], a[i]
-}
+// func (a Intervals) Swap(i, j int) {
+// 	a[i], a[j] = a[j], a[i]
+// }
 
-func (a Intervals) Less(i, j int) bool {
-	for k := 0; k < len(a[i]); k++ {
-		if a[i][k] < a[j][k] {
-			return true
-		} else if a[i][k] == a[j][k] {
-			continue
-		} else {
-			return false
-		}
-	}
-	return true
-}
+// func (a Intervals) Less(i, j int) bool {
+// 	for k := 0; k < len(a[i]); k++ {
+// 		if a[i][k] < a[j][k] {
+// 			return true
+// 		} else if a[i][k] == a[j][k] {
+// 			continue
+// 		} else {
+// 			return false
+// 		}
+// 	}
+// 	return true
+// }
 
 /* 435. 无重叠区间
 给定一个区间的集合 intervals ，
