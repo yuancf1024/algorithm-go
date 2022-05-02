@@ -60,13 +60,17 @@ func main() {
 	// 核心代码
 	// fmt.Println(color)
 	// fmt.Println(pic)
+	colorMap := make(map[int]int)
+	for i := 0; i < n; i++ {
+		colorMap[color[i]]++
+	}
 	for i := 0; i < q; i++ {
-		Query(nums[i], pic, color, n)
+		Query(nums[i], pic, color, colorMap)
 	}
 
 }
 
-func Query(nums []int, pic, color []int, n int) {
+func Query(nums []int, pic, color []int, colorMap map[int]int) {
 	// res := 0
 	// return res
 	// 核心代码
@@ -82,11 +86,17 @@ func Query(nums []int, pic, color []int, n int) {
 	for i := a1-1; i < a2; i++ {
 		query[pic[i]] = true
 	}
-	for i := 0 ; i < n; i++ {
-		if query[color[i]] {
-			ans++
-		}
+
+	for k, _ := range query {
+		ans += colorMap[k]
 	}
+
+	// for i := 0 ; i < n; i++ {
+	// 	if query[color[i]] {
+	// 		ans++
+	// 	}
+	// }
+	
 	fmt.Println(ans)
 	// fmt.Println(res)
 }
