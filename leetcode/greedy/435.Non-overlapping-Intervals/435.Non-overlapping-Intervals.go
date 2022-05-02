@@ -27,10 +27,10 @@ func eraseOverlapIntervals(intervals [][]int) int {
 	removed := 0
 	prev := intervals[0][1]
 	for i := 1; i < n; i++ {
-		if intervals[i][0] < prev {
+		if intervals[i][0] < prev { // 有重叠，移除+1
 			removed++
 		} else {
-			prev = intervals[i][1]
+			prev = intervals[i][1] // 无重叠，更新最右端
 		}
 	}
 	return removed
