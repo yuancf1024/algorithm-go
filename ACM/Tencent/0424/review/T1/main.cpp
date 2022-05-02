@@ -83,19 +83,20 @@ int main(int argc, char * argv[]) {
     for (int i = 0; i < n; i++) {
         string str;
         cin >> str;
-        len = str.size();
+        len = str.size(); 
         for (int j = 0; j < len; j++) {
-            g[j].push_back(str[j]);
+            g[j].push_back(str[j]); // 逐行将字符串中的单个字符添加进来，从''累积添加，
+            // cout << g[j] << " "; // 0 1 2 3 01 12 23 34 012 123 234 345
         }
     }
     vector<ll> nums;
     for (int i = 0; i < len; i++) {
-        nums.push_back(stoll(g[i]));
+        nums.push_back(stoll(g[i])); // 字符串转数字，默认去除前置0
     }
-    sort(nums.begin(), nums.end());
+    sort(nums.begin(), nums.end()); // 排序
     for (int i = 0; i < len; i++) {
         cout << nums[i];
-        if (i != len-1) cout << " ";
+        if (i != len-1) cout << " "; // 最后一个数字后面是没有空格的
     }
     return 0;
 }
