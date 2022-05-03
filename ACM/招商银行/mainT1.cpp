@@ -76,7 +76,7 @@ int main() {
                 }
             }
         }
-        int flag = 0;
+        int flag = 0; // 我当时也大概知道需要三层for循环遍历，但是不知道如何实现，大佬还是牛
         for (int i = 0; i < a[1].size(); i++) {
             for (int j = 0; j < a[2].size(); j++) {
                 for (int k = 0; k < a[3].size(); k++) {
