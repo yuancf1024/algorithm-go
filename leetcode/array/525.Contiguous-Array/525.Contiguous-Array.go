@@ -26,10 +26,10 @@ func findMaxLength(nums []int) int {
 		} else {
 			count++
 		}
-		if idx, ok := dict[count]; ok {
-			res = max(res, i-idx)
+		if idx, ok := dict[count]; ok { // 将每个前缀和存入 map 中
+			res = max(res, i-idx) // 扫描过程中动态更新最大区间长度
 		} else {
-			dict[count] = i
+			dict[count] = i // 哈希表的键是从第1个数字开始累加到当前扫描到的数字之和，而值是当前扫描的数字的下标
 		}
 	}
 	return res
