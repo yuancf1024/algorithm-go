@@ -52,26 +52,26 @@ func checkInclusion(s1 string, s2 string) bool {
 所以这道题是第 438 题的缩水版。具体解题思路见第 438 题。
 */
 
-// leetcode解法1：滑动窗口
+// leetcode解法1：滑动窗口 建议采用
 func checkInclusion_v1(s1 string, s2 string) bool {
 	n, m := len(s1), len(s2)
-	if n > m {
+	if n > m { // 边界情况，s1的长度大于s2
 		return false
 	}
 
 	var cnt1, cnt2 [26]int
 	for i, ch := range s1 {
-		cnt1[ch - 'a']++
-		cnt2[s2[i] - 'a']++
+		cnt1[ch - 'a']++ // cnt1统计 s1中各个字符的个数
+		cnt2[s2[i] - 'a']++ // cnt2统计当前遍历的子串中各个字符的个数
 	}
 
 	if cnt1 == cnt2 {
 		return true
 	}
 
-	for i := n; i < m; i++ {
-		cnt2[s2[i] - 'a']++
-		cnt2[s2[i-n] - 'a']--
+	for i := n; i < m; i++ { // 字符串s2向右滑动窗口
+		cnt2[s2[i] - 'a']++ // 滑动窗口每向右滑动一次，就多统计一次进入窗口的字符
+		cnt2[s2[i-n] - 'a']-- // 少统计一次离开窗口的字符
 		if cnt1 == cnt2 {
 			return true
 		}
