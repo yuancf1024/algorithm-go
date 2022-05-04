@@ -28,7 +28,7 @@ func pivotIndex(nums []int) int {
 		if leftSum*2 + num == sum {
 			return index
 		}
-		leftSum += num
+		leftSum += num // 放在条件判断的后面，相当于leftSum没有包含num
 	}
 	return -1
 }
