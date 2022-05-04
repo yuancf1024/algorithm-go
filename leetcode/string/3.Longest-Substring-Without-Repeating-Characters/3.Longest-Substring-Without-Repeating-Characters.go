@@ -91,3 +91,30 @@ func lengthOfLongestSubstring_v3(s string) int {
 	}
 	return result
 }
+
+// 参考剑指offer：使用哈希表
+func lengthOfLongestSubstring_v4(s string) int {
+	if len(s) == 0 {
+		return  0
+	}
+
+	var counts [256]int
+	i, j := 0, -1 // 注意左指针需要初始化为-1
+	longest, countDup := 1, 0
+	for ; i <len(s); i++ {
+		counts[s[i]]++ // 每次向右移动第2个指针使子字符串包含更多字符时都会把哈希表中对应的数字加1
+		if counts[s[i]] == 2 {
+			countDup++ // 定义一个变量countDup来存储哈希表中大于1的数字的个数,即子字符串中重复字符的个数
+		}
+
+		for countDup > 0 { //出现重复的字符，左指针右移
+			j++
+			counts[s[j]]-- 
+			if counts[s[j]] == 1 { // 当一个字符对应的数字由2变成1时，该字符不再重复出现，因此变量countDup减1
+				countDup--
+			}
+		}
+		longest = max(i-j, longest)
+	}
+	return longest
+}
