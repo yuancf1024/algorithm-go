@@ -110,7 +110,8 @@ func hasNzero(num int) int {
 		if num%10 == 0 {
 			zero++
 		}
-		num %= 10
+		num %= 10 // 这是一个比赛过程的bug ,此处要去除最后一位
+		// num /= 10
 	}
 	return zero
 }
