@@ -40,7 +40,7 @@ func mySqrt2(x int) int {
 }
 
 // 解法二 牛顿迭代法 https://en.wikipedia.org/wiki/Integer_square_root
-func mySqrt1(x int) int {
+func mySqrt3(x int) int {
 	r := x
 	for r*r > x {
 		r = (r + x/r) / 2
