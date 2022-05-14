@@ -45,13 +45,13 @@ import "strings"
 // }
 
 func isPalindrome(s string) bool {
-	s = strings.ToLower(s)
-	i, j := 0, len(s)-1
+	s = strings.ToLower(s) // 字符串全部转为小写
+	i, j := 0, len(s)-1 // 指向首尾字符
 	for i < j {
-		for i < j && !isChar(s[i]) {
+		for i < j && !isChar(s[i]) { // s[i]不是字符，i++
 			i++
 		}
-		for i < j && !isChar(s[j]) {
+		for i < j && !isChar(s[j]) { // s[j]不是字符，j--
 			j--
 		}
 		if s[i] != s[j] {
