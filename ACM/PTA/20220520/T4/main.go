@@ -37,9 +37,9 @@ func main() {
 	var n, m int
 	for {
 		_, err := fmt.Scanf("%d %d", &n, &m)
-		x := make([]int, 0)
-		y := make([]int, 0)
-		z := make([]int, 0)
+		// x := make([]int, 0)
+		// y := make([]int, 0)
+		// z := make([]int, 0)
 		if err != nil {
 			if err == io.EOF {
 				break
@@ -47,22 +47,37 @@ func main() {
 		} else {
 			// 核心代码
 			// fmt.Printf("%d %d\n", n, m)
-			for i := 1; i < m; i++ {
-				for j := i+1; j < m; j++ {
-					for k := j+1; k <= m; k++ {
-						if i < j && j < k && 3*i*j*k == n*(i*j+i*k+j*k) {
-							x = append(x, i)
-							y = append(x, j)
-							z = append(x, k)
+			var find bool = false
+			for i := 1; i <= m; i += 2 {
+				for j := i+2; j <= m; j += 2 {
+					for k := j+2; k <= m; k += 2 {
+						if 3*i*j*k == n*(i*j+i*k+j*k) {
+							// x = append(x, i) // 有趣，这个地方使用数组来储存x、y、z却得不到最终的结果
+							// y = append(x, j)
+							// z = append(x, k)
+							fmt.Printf("%d %d %d\n", i, j, k)
+							find = true
+							break
 						}
 					}
+					if find {
+						break
+					}
+				}
+				if find {
+					break
 				}
 			}
-			if len(x) == 0 {
-				fmt.Printf("No solution in (3, %d]\n", m)
-			} else {
-				fmt.Printf("%d %d %d\n", x[0], y[0], z[0])
+			// if len(x) == 0 {
+			// 	fmt.Printf("No solution in (3, %d].\n", m)
+			// } 
+			// else {
+			// 	fmt.Printf("%d %d %d\n", x[0], y[0], z[0])
+			// }
+			if !find {
+				fmt.Printf("No solution in (3, %d].\n", m)
 			}
+			
 		}
 	}
 }
