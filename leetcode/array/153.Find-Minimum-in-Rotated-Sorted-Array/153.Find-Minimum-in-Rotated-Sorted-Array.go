@@ -31,20 +31,20 @@ package leetcode
 func findMin(nums []int) int {
 	low, high := 0, len(nums)-1
 	for low < high {
-		if nums[low] < nums[high] {
+		if nums[low] < nums[high] { // 此时数组为升序，输出第一个元素即可
 			return nums[low]
 		}
 		mid := low + ((high - low) >> 1)
-		if nums[mid] >= nums[low] {
+		if nums[mid] >= nums[low] { // 说明mid处的值还没有达到最大，mid在最小值的左边，向右缩小左边界
 			low = mid + 1
-		} else {
+		} else { // 说明mid在最小值的右边，此刻向左收缩右边界
 			high = mid
 		}
 	}
 	return nums[low]
 }
 
-// 解法2 暴力
+// 解法2 暴力 时间复杂度 O(n)
 func findMin2(nums []int) int {
 	min := nums[0]
 	for _, num := range nums[1:] {
@@ -94,6 +94,9 @@ func findMin1(nums []int) int {
 
 /*
 解题思路
+
+数组旋转1次，相当于将数组最后一个元素挪到第一个位置
+
 给出一个原本从小到大排序过的数组，但是在某一个分割点上，
 把数组切分后的两部分对调位置，数值偏大的放到了数组的前部。
 求这个数组中最小的元素。
