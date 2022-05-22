@@ -54,11 +54,13 @@ int main() {
     cin >> numa >> numb;
     int index = 0; // 处理前置0
     while (numa[index] == '0') index++;
-    numa = numa.substr(index);
+    numa = numa.substr(index); // 字符串numa 跳过前置0
     index = 0;
     while (numb[index] == '0') index++;
     numb = numb.substr(index);
-    numa += numb; // 两数相加
+    numa += numb; // 两个字符串相连接
+    // 调试
+    // cout << numa << endl;
     sort(numa.begin(), numa.end()); // 排序
     string a, b;
     while (true) {
@@ -71,7 +73,7 @@ int main() {
         index = 0;
         while (b[index] == '0') index++;
         b = b.substr(index);
-        a += b; //相加并排序
+        a += b; //两个字符串相连接并排序
         sort(a.begin(), a.end());
         cout << (numa == a ? "Yes\n" : "No\n");
     }
