@@ -113,31 +113,31 @@ func (r *Ring) Unlink(n int) *Ring {
 	return r.Link(r.Move(n + 1)) // 此处的删除采用的是跳过n个节点，再将2个节点相连
 }
 
-// 测试添加节点
-func linkNewTest() {
-	// 第一个节点
-	r := &Ring{Value: -1}
+// // 测试添加节点
+// func linkNewTest() {
+// 	// 第一个节点
+// 	r := &Ring{Value: -1}
 
-	// 链接新的五个节点
-	r.Link(&Ring{Value: 1}) // Output: -1 -> 1
-	r.Link(&Ring{Value: 2}) // Output: -1 -> 2 ->1
-	r.Link(&Ring{Value: 3}) // Output: -1 -> 3 -> 2 ->1
-	r.Link(&Ring{Value: 4}) // Output: -1 -> 4 ->3 -> 2 ->1
+// 	// 链接新的五个节点
+// 	r.Link(&Ring{Value: 1}) // Output: -1 -> 1
+// 	r.Link(&Ring{Value: 2}) // Output: -1 -> 2 ->1
+// 	r.Link(&Ring{Value: 3}) // Output: -1 -> 3 -> 2 ->1
+// 	r.Link(&Ring{Value: 4}) // Output: -1 -> 4 ->3 -> 2 ->1
 
-	node := r
-	for {
-		// 打印节点值
-		fmt.Println(node.Value)
+// 	node := r
+// 	for {
+// 		// 打印节点值
+// 		fmt.Println(node.Value)
 
-		// 移到下一个节点
-		node = node.Next()
+// 		// 移到下一个节点
+// 		node = node.Next()
 
-		//  如果节点回到了起点，结束
-		if node == r {
-			return
-		}
-	}
-}
+// 		//  如果节点回到了起点，结束
+// 		if node == r {
+// 			return
+// 		}
+// 	}
+// }
 
 // 测试删除节点
 func deleteTest() {

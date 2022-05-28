@@ -6,11 +6,17 @@ type ListNode struct {
 }
 */
 // package _6_linkedlist
+
+// type ListNode struct {
+// 	Val int
+// 	Next *ListNode
+// }
+
 func isPalindrome(head *ListNode) bool {
 	var slow *ListNode = head
 	var fast *ListNode = head
 	var prev *ListNode = nil
-	var temp *listNode = nil
+	var temp *ListNode = nil
 
 	if (head == nil || head.Next == nil) {
 		return true

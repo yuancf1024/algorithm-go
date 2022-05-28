@@ -30,6 +30,6 @@ func linkNewTest() {
      }
  }
 
-func main() {
-    linkNewTest()
-}
+// func main() {
+//     linkNewTest()
+// }

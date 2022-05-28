@@ -1,8 +1,8 @@
 package main
 
-import (
-	"fmt"
-)
+// import (
+// 	"fmt"
+// )
 
 // BF search pattern index, return the first match subs start index
 func bfSearch(main string, pattern string) int {
@@ -21,9 +21,9 @@ func bfSearch(main string, pattern string) int {
 	return -1
 }
 
-func main() {
+// func main() {
 
-	main := "abcd227fac"
-	pattern := "ac"
-	fmt.Println(bfSearch(main, pattern))
-}
+// 	main := "abcd227fac"
+// 	pattern := "ac"
+// 	fmt.Println(bfSearch(main, pattern))
+// }
