@@ -30,12 +30,12 @@ func asteroidCollision(asteroids []int) []int {
 	res := []int{}
 	for _, v := range asteroids {
 		for len(res) != 0 && res[len(res)-1] > 0 && res[len(res)-1] < -v { // 栈不为空，栈顶 一层循环把所有能碰撞的向右飞行的行星都碰撞完
-			res = res[:len(res)-1]
+			res = res[:len(res)-1] // 栈顶出栈
 		}
 		if len(res) == 0 || v > 0 || res[len(res)-1] < 0 { // 如果栈顶行星向左飞，新来的行星向右飞，直接添加进来
-			res = append(res, v)
+			res = append(res, v) // 新来的行星 -> 入栈
 		} else if v < 0 && res[len(res)-1] == -v { // 否则栈顶行星向右飞，大小和向左飞的行星一样大小，两者都撞毁灭，弹出栈顶元素
-			res = res[:len(res)-1]
+			res = res[:len(res)-1] // 栈顶出栈
 		}
 	}
 	return res
