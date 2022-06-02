@@ -3,7 +3,7 @@ package leetcode
 import "github.com/yuancf1024/algorithm-go/structures"
 
 type TreeNode = structures.TreeNode
-/*
+/* 199. 二叉树的右视图
 给定一个二叉树的 根节点 root，想象自己站在它的右侧，
 按照从顶部到底部的顺序，返回从右侧所能看到的节点值。
 */
@@ -40,7 +40,7 @@ func rightSideView(root *TreeNode) []int {
 			tmp = append(tmp, queue[i].Val)
 		}
 		queue = queue[l:]
-		index := len(tmp) - 1
+		index := len(tmp) - 1 // 把每一层的最后一个元素添加进res即可
 		res = append(res, tmp[index])
 	}
 	return res
@@ -81,3 +81,8 @@ func rightSideView1(root *TreeNode) []int {
 
 	return finRes
 }
+
+/* 解题思路
+这一题是按层序遍历的变种题。按照层序把每层的元素都遍历出来，然后依次取每一层的最右边的元素即可。用一个队列即可实现。
+第 102 题和第 107 题都是按层序遍历的。
+*/
