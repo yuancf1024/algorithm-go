@@ -1,8 +1,16 @@
 {
     "version": "0.2.0",
     "configurations": [
+    {
+        "name": "Go-GDB",
+        "type": "go",
+        "request": "launch",
+        "mode": "debug",
+        "program": "${file}"
+    },
+        
         {//这个大括号里是我们的‘调试(Debug)’配置
-            "name": "Debug", // 配置名称
+            "name": "C++Debug", // 配置名称
             "type": "cppdbg", // 配置类型，cppdbg对应cpptools提供的调试功能；可以认为此处只能是cppdbg
             "request": "launch", // 请求配置类型，可以为launch（启动）或attach（附加）
             "program": "${fileDirname}/bin/${fileBasenameNoExtension}", // 将要进行调试的程序的路径

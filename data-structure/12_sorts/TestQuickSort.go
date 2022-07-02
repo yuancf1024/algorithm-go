@@ -1,6 +1,9 @@
-package _2_sorts
+package main
 
-// QuickSort is quicksort methods for golang
+import (
+	"fmt"
+)
+
 func QuickSort(arr []int) {
 	separateSort(arr, 0, len(arr)-1)
 }
@@ -34,4 +37,10 @@ func partition(arr []int, start, end int) int {
 	}
 	arr[i], arr[end] = arr[end], arr[i] // 此处end是pivot
 	return i
+}
+
+func main() {
+	arr := []int{5, 4, 9, 8, 3, 1, 2}
+	QuickSort(arr)
+	fmt.Println(arr)
 }
