@@ -14,7 +14,7 @@
 1 <= n <= 8
 */
 
-// 暴力法
+// 暴力法 参考leetcode
 class Solution {
 private:
     bool valid(const string& str) { 
@@ -66,4 +66,82 @@ public:
 否则它是有效的。
 */
 
+/*
+/参考labuladong 算法
 
+1. 回溯框架
+result = []
+def backtrack(路径,选择列表):
+    if 满足结束条件:
+        result.add(路径)
+        return
+    for 选择 in 选择列表:
+        做选择
+        backtrack(路径，选择列表)
+        撤销选择
+
+2. 伪代码
+void backtrack(int n, int i, string& track) {
+    // i 代表当前的位置，共2n 个位置
+    // 穷举到最后一个位置了，得到一个长度为2n组合
+    if (i == 2 * n) {
+        print(track);
+        return;
+    }
+
+    // 对于每个位置可以是左括号或者右括号两种选择
+    for choice in ['(', ')'] {
+        track.push(choice); // 做选择
+        // 穷举下一个位置
+        backtrack(n, i + 1, track);
+        track.pop(choice); // 撤销选择
+    }
+}
+*/
+
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        if (n == 0)
+            return {};
+        // 记录所有合法的括号组合
+        vector<string> res;
+        // 回溯过程中的路径
+        string track;
+        // 可用的左括号和右括号数量初始化为n
+        backtrack(n, n, track, res);
+        return res;
+    }
+
+    // 可用的左括号数量为left个，可用的右括号数量为right个
+    void backtrack(int left, int right, string& track, vector<string>& res) {
+        // 若左括号剩下的多，说明不合法
+        if (right < left)
+            return;
+        // 数量小于0 肯定是不合法
+        if (left < 0 || right < 0)
+            return;
+        // 当所有括号都恰好用完时，得到一个合法的括号组合
+        if (left == 0 && right == 0) {
+            res.push_back(track);
+            return;
+        }
+
+        // 尝试放一个左括号
+        track.push_back('('); // 选择
+        backtrack(left - 1, right, track, res);
+        track.pop_back(); // 撤销选择
+
+        // 尝试放一个右括号
+        track.push_back(')'); // 选择
+        backtrack(left, right - 1, track, res);
+        track.pop_back(); // 撤销选择
+    }
+};
+
+
+/*
+对于 2n 个位置，必然有 n 个左括号，n 个右括号，
+所以我们不是简单的记录穷举位置 i，而是用 left 记录还可以使用多少个左括号，
+用 right 记录还可以使用多少个右括号
+*/
