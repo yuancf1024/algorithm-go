@@ -106,7 +106,7 @@ public:
 // 堆排序+选择 参考leetcode官方题解
 class Solution {
 public:
-    // 大顶堆堆化
+    // 大顶堆堆化，以i当作根节点，调整其和其子树为最大堆 && 节点从0开始
     void maxHeapify(vector<int>& a, int i, int heapSize) {
         int l = i * 2 + 1, r = i * 2 + 2, largest = i;
         if (l < heapSize && a[l] > a[largest]) {
@@ -117,10 +117,11 @@ public:
         }
         if (largest != i) {
             swap(a[i], a[largest]);
-            maxHeapify(a, largest, heapSize);
+            maxHeapify(a, largest, heapSize); // 递归
         }
     }
 
+    // 建堆，本质：从下往上，从右往左，将每个非叶子结点当作根节点，将其和子树调整成最大堆
     void buildMaxHeap(vector<int>& a, int heapSize) {
         for (int i = heapSize / 2; i >= 0; --i) {
             maxHeapify(a, i, heapSize);
@@ -130,9 +131,10 @@ public:
     int findKthLargest(vector<int>& nums, int k) { 
         int heapSize = nums.size();
         buildMaxHeap(nums, heapSize);
+        // 将堆中前k-1个元素移到末尾，那么最后的堆顶即为所求topK元素
         for (int i = nums.size() - 1; i >= nums.size() - k + 1;--i) {
-            swap(nums[0], nums[i]);
-            --heapSize;
+            swap(nums[0], nums[i]); // 将堆顶的元素和最后一个元素交换位置
+            --heapSize; 
             maxHeapify(nums, 0, heapSize);
         }
         return nums[0];
