@@ -56,23 +56,35 @@ void insertion_sort(vector<int>& nums, int n) {
         }
     }
 }
+/*
+插入排序是在一个已经有序的小序列的基础上，一次插入一个元素。
 
-// 冒泡排序(BubbleSort)
+当然，刚开始这个有序的小序列只有1个元素，就是第一个元素。
+比较是从有序序列的末尾开 始，也就是想要插入的元素和已经有序的最大者开始比起，
+如果比它大则直接插入在其后面，否则一直往前找直到找到它该插入的位置。
+*/
+
+// 冒泡排序(BubbleSort) 优化版本
 void bubble_sort(vector<int>& nums, int n) { 
-    bool swapped;
+    bool swapped; // 标记
     for (int i = 1; i < n; ++i) {
         swapped = false;
         for (int j = 1; j < n - i + 1; ++j) {
             if (nums[j] < nums[j-1]) {
                 swap(nums[j], nums[j - 1]);
-                swapped = true;
+                swapped = true; // 相邻元素发生了交换
             }
         }
-        if (!swapped) {
+        if (!swapped) { // swapped为false，说明没有交换，则表明[0, len-i-1]已经是有序的了
             break;
         }
     }
 }
+/*
+假如从开始的第一对到结尾的最后一对，相邻的元素之间都没有发生交换的操作，
+这意味着右边的元素总是大于等于左边的元素，
+此时的数组已经是有序的了，我们无需再对剩余的元素重复比较下去了。
+*/
 
 // 选择排序(SelectionSort)
 void selection_sort(vector<int>& nums, int n) { 
@@ -87,6 +99,12 @@ void selection_sort(vector<int>& nums, int n) {
         swap(nums[mid], nums[i]);
     }
 }
+/*
+1. 在未排序序列中找到最小（大）元素，存放到排序序列的起始位置
+2. 从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾
+3. 以此类推，直到所有元素均排序完毕
+4. 时间负复杂度：O(n^2)，空间O（1），非稳定排序，原地排序
+*/
 
 // 以上排序调用方法
 void sort() {
@@ -134,14 +152,14 @@ int main() {
     // printf("归并排序结果:\n");
     // merge_sort(nums, 0, nums.size(), temp);
 
-    // printf("插入排序结果:\n");
-    // insertion_sort(nums, nums.size());
+    printf("插入排序结果:\n");
+    insertion_sort(nums, nums.size());
 
     // printf("冒泡排序结果:\n");
     // bubble_sort(nums, nums.size());
 
-    printf("选择排序结果:\n");
-    selection_sort(nums, nums.size());
+    // printf("选择排序结果:\n");
+    // selection_sort(nums, nums.size());
 
     print_nums1(nums);
     printf("\n");
