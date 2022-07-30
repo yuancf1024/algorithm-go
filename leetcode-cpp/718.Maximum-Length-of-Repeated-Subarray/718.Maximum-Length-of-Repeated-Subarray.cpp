@@ -21,7 +21,7 @@ class Solution {
 public:
     int findLength(vector<int>& nums1, vector<int>& nums2) {
         vector<vector<int>> dp(nums1.size() + 1,
-                               vector<int>(nums2.size() + 1, 0));
+                               vector<int>(nums2.size() + 1, 0)); // 元素全为0
         int result = 0;
         for (int i = 1; i <= nums1.size(); i++) {
             for (int j = 1; j <= nums2.size(); j++) {
