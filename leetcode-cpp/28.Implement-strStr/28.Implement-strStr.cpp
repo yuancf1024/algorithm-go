@@ -66,8 +66,9 @@ public:
     void getNext(int* next, const string& s) { 
         int j = -1;
         next[0] = j;
+        // j指向前缀末尾位置，i指向后缀末尾位置
         for (int i = 1; i < s.size(); i++) { // 注意i从1开始
-            while (j >= 0 && s[i] != s[j+1]) { // 前后缀不相同了
+            while (j >= 0 && s[i] != s[j+1]) { // 前后缀不相同了 // 注意这里是连续回退使用while
                 j = next[j]; // 向前回退
             }
             if (s[i] == s[j+1]) { // 找到相同的前后缀
@@ -78,7 +79,7 @@ public:
     }
 
     int strStr(string haystack, string needle) {
-        if (needle.size() == 0) {
+        if (needle.size() == 0) { // 处理模式串为空的边界情况
             return 0;
         }
         int next[needle.size()];
@@ -92,7 +93,7 @@ public:
                 j++; // i的增加在for循环里
             }
             if (j == (needle.size() -1)) { // 文本串里出现了模式串t
-                return (i - needle.size() + 1);
+                return (i - needle.size() + 1); // 可以手动模拟理解
             }
         }
         return -1;
@@ -106,14 +107,14 @@ public:
     void getNext(int* next, const string& s) {
         int j = 0;
         next[0] = 0;
-        for(int i = 1; i < s.size(); i++) {
-            while (j > 0 && s[i] != s[j]) {
-                j = next[j - 1];
+        for(int i = 1; i < s.size(); i++) { // 注意i从1开始
+            while (j > 0 && s[i] != s[j]) { // 注意这里是连续回退
+                j = next[j - 1]; // 向前回退
             }
-            if (s[i] == s[j]) {
+            if (s[i] == s[j]) { // 找到相同的前后缀
                 j++;
             }
-            next[i] = j;
+            next[i] = j; // 将j(前缀的长度)赋给next[i]
         }
     }
     int strStr(string haystack, string needle) {
