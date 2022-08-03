@@ -159,3 +159,138 @@ public:
 因为 k<n，故渐进时间复杂为 O(n+klogn)=O(nlogn)。
 空间复杂度：O(logn)，即递归使用栈空间的空间代价。
 */
+
+// 2022-08-03 复写 快速选择
+// 奇怪：我和上面那位牛客大佬的写法思路一样，但是会有测试case过不了
+// 所以应该是哪里的边界条件没有考虑到位
+// 通过测试用例：13 / 39
+// 哭死 int low, high = nums.size()-1, target = nums.size()-k; // 忘了初始化low 😂
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {          
+        int low, high = nums.size()-1, target = nums.size()-k;
+        while (low < high) {
+            int mid = quickSelection(nums, low, high);
+            if (mid == target) {
+                return nums[mid];
+            }
+            if (mid < target) {
+                low = mid + 1;
+            } else {
+                high = mid -1;
+            }
+        }
+        return nums[low];
+    }
+
+    // 快排划分，左小右大，[low, high] 左闭右闭
+    int quickSelection(vector<int>& nums, int low, int high) {
+        if (low >= high) {
+            return -1;
+        }
+        int first = low;
+        int last = high;
+        int key = nums[first]; // 以第一个数作为标兵
+        while (first < last) {
+            // 从后往前遍历，将比第一个小的移动到前面
+            while (first < last && nums[last] >= key) {
+                last--;
+            }
+            nums[first] = nums[last];
+            // 从前往后遍历，将比第一个大的移动到后面
+            while (first < last && nums[first] <= key) {
+                first++;
+            }
+            nums[last] = nums[first];
+        }
+        nums[first] = key;
+        return first;
+    }
+};
+
+// 2022-08-03 Debug后 Pass 的实现
+class Solution {
+public:
+int findKthLargest(vector<int>& nums, int k) {          
+        int low = 0, high = nums.size()-1, target = nums.size()-k;
+        while (low < high) {
+            int mid = quickSelection(nums, low, high);
+            if (mid == target) {
+                return nums[mid];
+            }
+            if (mid < target) {
+                low = mid + 1;
+            } else {
+                high = mid -1;
+            }
+        }
+        return nums[low];
+    }
+
+    int quickSelection(vector<int>& nums, int low, int high) {
+        if (low >= high) {
+            return -1;
+        }
+        // int first = low;
+        // int last = high;
+        int key = nums[low]; // 以第一个数作为标兵
+        while (low < high) {
+            // 从后往前遍历，将比第一个小的移动到前面
+            while (low < high && nums[high] >= key) {
+                high--;
+            }
+            nums[low] = nums[high];
+            // 从前往后遍历，将比第一个大的移动到后面
+            while (low < high && nums[low] <= key) {
+                low++;
+            }
+            nums[high] = nums[low];
+        }
+        nums[low] = key;
+        return low;
+    }
+};
+
+
+// 复写，和快速排序保持一致的实现
+class Solution {
+public:
+int findKthLargest(vector<int>& nums, int k) {          
+        int low = 0, high = nums.size()-1, target = nums.size()-k;
+        while (low < high) {
+            int mid = quickSelection(nums, low, high);
+            if (mid == target) {
+                return nums[mid];
+            }
+            if (mid < target) {
+                low = mid + 1;
+            } else {
+                high = mid -1;
+            }
+        }
+        return nums[low];
+    }
+
+    int quickSelection(vector<int>& nums, int low, int high) {
+        if (low >= high) {
+            return -1;
+        }
+        int first = low;
+        int last = high;
+        int key = nums[first]; // 以第一个数作为标兵
+        while (first < last) {
+            // 从后往前遍历，将比第一个小的移动到前面
+            while (first < last && nums[last] >= key) {
+                last--;
+            }
+            nums[first] = nums[last];
+            // 从前往后遍历，将比第一个大的移动到后面
+            while (first < last && nums[first] <= key) {
+                first++;
+            }
+            nums[last] = nums[first];
+        }
+        nums[first] = key;
+        return first;
+    }
+};
