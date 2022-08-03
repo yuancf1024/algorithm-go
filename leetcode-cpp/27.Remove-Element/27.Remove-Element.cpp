@@ -93,3 +93,18 @@ public:
 首尾指针
 
 */
+
+// 2022-08-03 复写
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val) { 
+        int slow = 0, fast = 0;
+        while (fast < nums.size()) {
+            if (nums[fast] != val) {
+                nums[slow++] = nums[fast];
+            }
+            fast++;
+        }
+        return slow;
+    }
+};
