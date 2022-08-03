@@ -7,7 +7,9 @@
         "ostream": "cpp",
         "unordered_map": "cpp",
         "map": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "deque": "cpp",
+        "string": "cpp"
     }
     // "go.inferGopath": false,
 }
