@@ -158,3 +158,122 @@ public:
 哈希表中包含 O(N×C) 个节点，每个节点占用空间 O(C)，
 因此总的空间复杂度为 O(NC^2)。
  */
+
+// 方法二：双向广度优先搜索
+class Solution {
+public:
+    unordered_map<string, int> wordId;
+    vector<vector<int>> edge;
+    int nodeNum = 0;
+
+    // 将单词添加进哈希表，建立word -> wordId的映射关系
+    void addWord(string& word) {
+        if (!wordId.count(word)) {
+            wordId[word] = nodeNum++;
+            edge.emplace_back();
+        }
+    }
+
+    // 创建图，节点上存储的是wordId
+    void addEdge(string& word) { 
+        addWord(word);
+        int id1 = wordId[word];
+        for (char& it : word) { // 遍历字符串word中的每个字符it，注意此处使用引用
+            char tmp = it;
+            it = '*'; // 将字符串中的单个字符替换成*,生成变化了1个字符的新字符
+            addWord(word); // 将新字符添加进哈希表
+            int id2 = wordId[word];
+            edge[id1].push_back(id2); // 建立两个相差1个字符的图连接，双向连接
+            edge[id2].push_back(id1);
+            it = tmp; // 复原字符串
+        }
+    }
+
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        for (string& word : wordList) { // 遍历wordList，建立图
+            addEdge(word);
+        }
+
+        addEdge(beginWord); // 将首部单词添加进图
+        if (!wordId.count(endWord)) { // 如果尾部单词不在哈希表中，返回0
+            return 0;
+        }
+
+        vector<int> disBegin(nodeNum, INT_MAX);
+        int beginId = wordId[beginWord];
+        disBegin[beginId] = 0;
+        queue<int> queBegin;
+        queBegin.push(beginId); // 起点加入队列
+
+        vector<int> disEnd(nodeNum, INT_MAX);
+        int endId = wordId[endWord];
+        disEnd[endId] = 0;
+        queue<int> queEnd;
+        queEnd.push(endId);
+
+        while (!queBegin.empty() && !queEnd.empty()) { // 队列不为空
+            
+            // 从 beginWord 开始搜索
+            int queBeginSize = queBegin.size();
+            for (int i = 0; i < queBeginSize; ++i) {
+                int nodeBegin = queBegin.front();
+                queBegin.pop(); // 队首出队
+                if (disEnd[nodeBegin] != INT_MAX) { // 结束搜索的条件: 找到目标
+                    return (disBegin[nodeBegin] + disEnd[nodeBegin]) / 2 + 1; // 返回距离的一半再加一的结果
+                }
+                for (int& it : edge[nodeBegin]) { // 遍历节点x的连接节点
+                    if (disBegin[it] == INT_MAX) { // 没有遍历过
+                        disBegin[it] = disBegin[nodeBegin] + 1;
+                        queBegin.push(it); // 将节点it添加进队列
+                    }
+                }
+            }
+
+            // 从 endWord 开始搜索
+            int queEndSize = queEnd.size();
+            for (int i = 0; i < queEndSize; ++i) {
+                int nodeEnd = queEnd.front();
+                queEnd.pop(); // 队首出队
+                if (disBegin[nodeEnd] != INT_MAX) { // 结束搜索的条件: 找到目标
+                    return (disBegin[nodeEnd] + disEnd[nodeEnd]) / 2 + 1; // 返回距离的一半再加一的结果
+                }
+                for (int& it : edge[nodeEnd]) { // 遍历节点x的连接节点
+                    if (disEnd[it] == INT_MAX) { // 没有遍历过
+                        disEnd[it] = disEnd[nodeEnd] + 1;
+                        queEnd.push(it); // 将节点it添加进队列
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+};
+
+/**
+ * @brief 方法二：双向广度优先搜索
+ * 思路及解法
+
+根据给定字典构造的图可能会很大，而广度优先搜索的搜索空间大小
+依赖于每层节点的分支数量。假如每个节点的分支数量相同，
+搜索空间会随着层数的增长指数级的增加。
+考虑一个简单的二叉树，每一层都是满二叉树的扩展，节点的数量会以 2 为底数呈指数增长。
+
+如果使用两个同时进行的广搜可以有效地减少搜索空间。
+一边从 beginWord 开始，另一边从 endWord 开始。
+我们每次从两边各扩展一层节点，当发现某一时刻两边都访问过同一顶点时
+就停止搜索。这就是双向广度优先搜索，它可以可观地减少搜索空间大小，
+从而提高代码运行效率。
+
+复杂度分析
+
+- 时间复杂度：O(N×C^2)。其中 N 为 wordList 的长度，C 为列表中单词的长度。
+    - 建图过程中，对于每一个单词，我们需要枚举它连接到的所有虚拟节点，
+    时间复杂度为 O(C)，将这些单词加入到哈希表中，时间复杂度为O(N×C)，
+    因此总时间复杂度为 O(N×C)。
+    - 双向广度优先搜索的时间复杂度最坏情况下是 O(N×C)。
+    每一个单词需要拓展出O(C) 个虚拟节点，因此节点数 O(N×C)。
+
+空间复杂度：O(N×C^2)。其中 N 为 wordList 的长度，C 为列表中单词的长度。
+哈希表中包含 O(N×C) 个节点，每个节点占用空间O(C)，
+因此总的空间复杂度为 O(N×C^2)。
+ */
