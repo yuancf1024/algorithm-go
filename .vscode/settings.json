@@ -9,7 +9,17 @@
         "map": "cpp",
         "vector": "cpp",
         "deque": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "*.tcc": "cpp",
+        "array": "cpp",
+        "bitset": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp",
+        "regex": "cpp",
+        "utility": "cpp",
+        "valarray": "cpp",
+        "forward_list": "cpp",
+        "list": "cpp"
     }
     // "go.inferGopath": false,
 }
