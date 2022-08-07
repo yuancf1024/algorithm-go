@@ -58,7 +58,7 @@ class Solution {
 public:
 
     // 用来实现O(1)的时间复杂度，查询受限节点
-    unordered_set<int> r;
+    unordered_set<int> r; // 哈希表
     // 建图+dfs搜索 从节点0出发能访问到的所有节点
     int reachableNodes(int n, vector<vector<int>>& edges,
                        vector<int>& restricted) {

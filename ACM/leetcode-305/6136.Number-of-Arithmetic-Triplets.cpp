@@ -117,7 +117,7 @@ public:
             while (nums[i]+2*diff < nums[k]) {
                 i++;
             }
-            if (nums[i]+2*diff == nums[k]) {
+            if (nums[i]+2*diff == nums[k]) { // (nums[i], nums[j], nums[k])
                 res++;
             }
         }
@@ -168,4 +168,8 @@ public:
 复杂度分析
 - 时间复杂度：O(n)，其中 n 为 nums 的长度。
 - 空间复杂度：O(1)。仅需要几个额外的变量。
+
+
+反思：
+
  */

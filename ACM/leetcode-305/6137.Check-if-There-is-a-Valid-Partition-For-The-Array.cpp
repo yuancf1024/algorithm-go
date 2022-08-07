@@ -87,7 +87,7 @@ public:
     bool validPartition(vector<int>& nums) { 
         memset(f, false, sizeof(f));
         // 初始状态f[0]表示没有划分的数组，是有效状态
-        f[0] = true;
+        f[0] = true; // 空数组也是一种状态，空就相当于划分好了
         int n = nums.size();
         // 进行状态转移: nums[i]对应状态f[i+1], 所以根据nums[i]与前面数的关系进行递推
         // 状态转移中元数组nums下标从1开始，因为子数组最少要求2个元素
