@@ -125,6 +125,27 @@ public:
     }
 };
 
+// 三指针的另一种实现
+class Solution {
+public:
+    int arithmeticTriplets(vector<int>& nums, int diff) {
+        int n = nums.size(), res = 0;
+        for (int i = 0, j = i + 1; i < n; ++i) {
+            while (j+1 < n && nums[j] - nums[i] < diff) {
+                j++;
+            }
+            int k = j + 1;
+            while (k < n && nums[k] - nums[j] < diff) {
+                k++;
+            }
+            if (k < n && nums[k] - nums[j] == diff && nums[j] - nums[i] == diff) {
+                res++;
+            }
+        }
+        return res;
+    }
+};
+
 /**
  * @brief 参考大佬 @灵茶山艾府
  * 两种 O(n) 做法：哈希表 / 三指针
