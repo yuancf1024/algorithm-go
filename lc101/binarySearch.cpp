@@ -1,3 +1,5 @@
+#include <bits/stdc++.h>
+
 // 二分法第一种写法 左闭右闭即[left, right]
 // 版本1
 class Solution {
@@ -55,12 +57,78 @@ public:
 
 // 1. 查找第一个值等于给定值的元素
 // 二分查找第一个与target相等的元素，时间复杂度O(logn)
-
+int searchFirstEqualElement(vector<int>& nums, int target) { 
+    int left = 0;
+    int right = nums.size() - 1;
+    while (left <= right) {
+        int middle = left + ((right - left) >> 1);
+        if (nums[middle] > target) {
+            right = middle - 1; 
+        } else if (nums[middle] < target) {
+            left = middle + 1; 
+        } else { // mid == target时的边界条件判断
+            if (mid == 0 || (nums[mid-1] != target)) { //找到第一个与 target 相等的元素 
+                return middle; // mid为第一个元素直接返回 or mid左边邻近元素不等于target也直接返回
+            }
+            right = middle - 1;
+        }
+    }
+    return -1; // 未找到目标值
+}
 
 // 2. 查找最后一个值等于给定值的元素
+int searchLastEqualElement(vector<int>& nums, int target) { 
+    int left = 0;
+    int right = nums.size() - 1;
+    while (left <= right) {
+        int middle = left + ((right - left) >> 1);
+        if (nums[middle] > target) {
+            right = middle - 1; 
+        } else if (nums[middle] < target) {
+            left = middle + 1; 
+        } else { // mid == target时的边界条件判断
+            if (mid == nums.size()-1 || (nums[mid+1] != target)) {// 找到最后一个与 target 相等的元素
+                return middle; // mid为最后一个元素直接返回 or mid右边邻近元素不等于target也直接返回
+            }
+            left = middle + 1;
+        }
+    }
+    return -1; // 未找到目标值
+}
 
 // 3. 查找第一个大于等于给定值的元素
+// 二分查找第一个大于等于 target 的元素，时间复杂度 O(logn)
+int searchFirstGreaterElement(vector<int>& nums, int target) {
+    int left = 0, right = nums.size() - 1;
+    while (left <= right) {
+        int middle = left + ((right - left) >> 1);
+        if (nums[mid] >= target) { // 找到第一个大于等于 target 的元素
+            if (middle == 0 || nums[mid-1] < target) { // 处理边界条件
+                return middle; // mid 为第一个元素 or mid左边相邻元素小于target
+            }
+            right = middle - 1;
+        } else {
+            left = middle + 1;
+        }
+    }
+    return -1;
+}
 
 // 4. 查找最后一个小于等于给定值的元素 
 // leetcode-35 搜索插入位置
-
+// 二分查找最后一个小于等于 target 的元素，时间复杂度 O(logn)
+int searchFirstSmallerElement(vector<int>& nums, int target) {
+    int left = 0, right = nums.size() - 1;
+    while (left <= right) {
+        int middle = left + ((right - left) >> 1);
+        if (nums[mid] <= target) { // 找到最后一个小于等于 target 的元素
+            if (middle == nums.size()-1 || nums[mid+1] > target) { // 处理边界条件
+                return middle; // mid 为最后一个元素 or mid左=右边相邻元素大于target
+            }
+            left = middle + 1;
+        } else {
+            right = middle - 1;
+        }
+    }
+    return -1;
+}
