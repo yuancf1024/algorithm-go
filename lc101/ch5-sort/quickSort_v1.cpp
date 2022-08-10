@@ -112,3 +112,41 @@ int main() {
     return 0;
 }
 
+
+
+// 快速排序复写 2022-08-10 + 引入随机化，避免向n-1集中递归的情况
+class Solution {
+public:
+    vector<int> sortArray(vector<int>& nums) {
+        quickSort(nums, 0, nums.size()-1);
+        return nums;
+    }
+    void quickSort(vector<int>&nums, int low, int high) {
+        if (low >= high) {
+            return;
+        }
+        // 加入面试官对于极端case的性能有要求，那么引入随机化避免向n-1集中递归的情况
+        int r = rand() % (high - low + 1) + low;
+        swap(nums[r], nums[low]);
+
+        int first = low;
+        int last = high;
+        int key = nums[first];
+        while (first < last) {
+            // 从后往前，将比第一个小的移动到前面
+            while (first < last && nums[last] >= key) {
+                last--;
+            }
+            nums[first] = nums[last];
+            // 从前往后，将比第一个大的移到后面
+            while (first < last && nums[first] <= key) {
+                first++;
+            }
+            nums[last] = nums[first];
+        }
+        nums[first] = key;
+        quickSort(nums, low, first-1);
+        quickSort(nums, first+1, high);
+    }
+};
+
