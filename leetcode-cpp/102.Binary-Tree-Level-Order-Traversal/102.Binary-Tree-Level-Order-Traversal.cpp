@@ -84,3 +84,42 @@ public:
         return result;
     }
 };
+
+// 复写 2022-08-11 二叉树层序遍历 BFS
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode *root) { 
+        queue<TreeNode *> que;
+        if (root != NULL) {
+            que.push(root);
+        }
+        vector<vector<int>> res;
+        while (!que.empty()) {
+            int size = que.size(); // 很关键，确定每层遍历的节点数
+            vector<int> vec;
+            for (int i = 0; i < size; ++i) {
+                TreeNode *node = que.front();
+                que.pop(); // 队首出队
+                vec.push_back(node->val);
+                if (node->left) {
+                    que.push(node->left);
+                }
+                if (node->right) {
+                    que.push(node->right);
+                }
+            }
+            res.push_back(vec);
+        }
+        return res;
+    }
+};
+
+/*
+二叉树层序遍历流程：
+1. 新建队列que和二维动态数组res，如果根节点不为空，root入队；
+2. BFS：只要队列不为空，遍历该层，
+    - 确定该层节点数(que.size()),该层返回的数组vec；
+    - 遍历该层，队首节点出队，节点值加入vec，左右子节点分别入队;
+    - vec 添加进 res；
+3. 返回res
+*/

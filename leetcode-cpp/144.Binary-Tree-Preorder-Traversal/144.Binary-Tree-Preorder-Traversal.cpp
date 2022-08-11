@@ -65,7 +65,7 @@ public:
     }
 };
 
-// 参考代码随想录model
+// 参考代码随想录model 二叉树前序遍历 递归
 class Solution {
 public:
     vector<int> preorderTraversal(TreeNode* root) { 
@@ -78,8 +78,37 @@ public:
         if (cur == NULL) { // 2. 确定终止条件
             return;
         }
-        vec.push_back(cur->val); // 3. 确定单层递归的逻辑：
+        vec.push_back(cur->val); // 3. 确定单层递归的逻辑：中左右
         traversal(cur->left, vec);
         traversal(cur->right, vec);
     }
 };
+
+// 二叉树前序遍历 迭代法
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) { 
+        stack<TreeNode*> st;
+        vector<int> res;
+        if (root == NULL) {
+            return res;
+        }
+        st.push(root);
+        while (!st.empty()) { // 栈不为空
+            TreeNode* node = st.top();
+            st.pop(); // 栈顶出栈
+            res.push_back(node->val); // 中
+            if (node->right) {
+                st.push(node->right); // 右：空节点不入栈
+            }
+            if (node->left) {
+                st.push(node->left); // 左：空节点不入栈
+            }
+        }
+        return res;
+    }
+};
+/*
+前序遍历是中左右，每次先处理的是中间节点，那么先将根节点放入栈中，
+然后将右孩子加入栈，再加入左孩子。
+*/
