@@ -19,7 +19,8 @@
         "utility": "cpp",
         "valarray": "cpp",
         "forward_list": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "any": "cpp"
     }
     // "go.inferGopath": false,
 }
