@@ -40,7 +40,77 @@ board 和 word 仅由大小写英文字母组成
 进阶：你可以使用搜索剪枝的技术来优化解决方案，使其在 board 更大的情况下可以更快解决问题？
  */
 
+// 复写2022-08-13
+/*
+思路：回溯+DFS
+我们可以从网格中的任意一个位置出发寻找单词，
+如果找到则返回 true，否则以下一个位置为起点继续寻找。
 
+对于任一开始位置，寻找的过程都是一个回溯过程，
+需要使用递归求解
+
+1. 递归函数含义：bool dfs(int x, int y, string& word, int u) 
+表示当前位置 (x,y) 和 word 中的第 u 个字母是否匹配，
+如果匹配则返回 true 否则返回 false。
+
+2. 递归出口条件：如果 g[x][y]!=word[u] 
+说明当前位置上的字符与答案不匹配直接返回 false，
+否则说明匹配且当 u==word.size()−1 所有字母都匹配成功，
+即找到了单词则返回 true。
+
+3. 单层递归逻辑：
+设置当前位置已经访问过 st[x][y]=true
+从当前位置开始判断四个方向上的字母是否与 word 中的下一个字母匹配
+且这个位置之前没有走过，如果匹配则走到下一个位置，
+否则如果所有方向都不能匹配则回溯到当前位置的上一个位置继续寻找。
+状态回溯 st[x][y]=false
+
+时间复杂度
+O(2^n)，不是精确值，但回溯一般都是指数级别复杂度
+空间复杂度
+O(nm)，n 是行，m 是列（代码中的实现）。
+*/
+
+class Solution {
+public:
+    vector<int> direction = {-1, 0, 1, 0, -1};
+    bool exist(vector<vector<char>>& board, string word) {
+        int m = board.size(), n = board[0].size();
+        vector<vector<bool>> visited(m, vector<bool>(n));
+
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (dfs(board, visited, i, j, word, 0)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // 辅函数
+    bool dfs(vector<vector<char>>& board, vector<vector<bool>>& visited, int i, int j, string& word, int k) {
+        // 回溯终止条件
+        if (word[k] != board[i][j]) {
+            return false;
+        }
+        if (k == word.size()-1) {
+            return true;
+        }
+        visited[i][j] = true; // word[i][j] == board[i][j]
+        // 回溯搜索遍历
+        for (int a = 0; a < 4; ++a) {
+            int x = i + direction[a], y = j + direction[a + 1];
+            if (x >= 0 && x < board.size() && y >= 0 && y < board[0].size() && !visited[x][y]) {
+                if (dfs(board, visited, x, y, word, k+1)) {
+                    return true;
+                }
+            }
+        }
+        visited[i][j] = false;
+        return false;
+    }
+};
 
 // 回溯
 class Solution {
