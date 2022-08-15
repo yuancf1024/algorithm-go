@@ -5,4 +5,4 @@ struct ListNode {
     ListNode(int x) : val(x), next(NULL) {}  // 节点的构造函数
     ListNode() : val(0), next(NULL) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
-}
+};
