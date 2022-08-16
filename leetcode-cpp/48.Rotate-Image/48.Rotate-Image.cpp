@@ -29,6 +29,27 @@ n == matrix.length == matrix[i].length
 -1000 <= matrix[i][j] <= 1000
  */
 
+// 方法三：用翻转代替旋转 建议采用
+class Solution {
+public:
+    void rotate(vector<vector<int>>& matrix) { 
+        int n = matrix.size();
+        // 水平翻转
+        for (int i = 0; i < n / 2; ++i) {
+            for (int j = 0; j < n; ++j) {
+                swap(matrix[i][j], matrix[n - i - 1][j]);
+            }
+        }
+        // 主对角线翻转
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < i; ++j) {
+                swap(matrix[i][j], matrix[j][i]);
+            }
+        }
+    }
+};
+
+
 // 方法一：使用辅助数组
 class Solution {
 public:
@@ -63,25 +84,7 @@ public:
     }
 };
 
-// 方法三：用翻转代替旋转
-class Solution {
-public:
-    void rotate(vector<vector<int>>& matrix) { 
-        int n = matrix.size();
-        // 水平翻转
-        for (int i = 0; i < n / 2; ++i) {
-            for (int j = 0; j < n; ++j) {
-                swap(matrix[i][j], matrix[n - i - 1][j]);
-            }
-        }
-        // 主对角线翻转
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < i; ++j) {
-                swap(matrix[i][j], matrix[j][i]);
-            }
-        }
-    }
-};
+
 
 // 
 
