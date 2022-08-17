@@ -95,7 +95,7 @@ public:
                 */
                 if (nums[i] + nums[left] + nums[right] > 0) {
                     right--;
-                } else if (nums[i] + nums[left] + nums[right]) {
+                } else if (nums[i] + nums[left] + nums[right] < 0) {
                     left++;
                 } else {
                     result.push_back(vector<int>{nums[i], nums[left], nums[right]});
