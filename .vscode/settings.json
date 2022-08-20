@@ -20,7 +20,8 @@
         "valarray": "cpp",
         "forward_list": "cpp",
         "list": "cpp",
-        "any": "cpp"
+        "any": "cpp",
+        "unordered_set": "cpp"
     }
     // "go.inferGopath": false,
 }
