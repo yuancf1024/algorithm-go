@@ -33,7 +33,7 @@ public:
         for (int i = 0; i < intervals.size(); ++i) {
             for (int j = i + 1; j < intervals.size(); ++j) {
                 if ((intervals[i][0] >= intervals[j][0] && intervals[i][0] < intervals[j][1]) ||
-                (intervals[j][0] >= intervals[i][0] && intervals[j][0] < intervals[i][1])) {
+                (intervals[j][0] >= intervals[i][0] && intervals[j][0] < intervals[i][1])) { // 存在重叠区域
                     return false;
                 }
             }
@@ -51,7 +51,7 @@ public:
                  return a[0] < b[0];
              });
         for (int i = 1; i < intervals.size(); ++i) {
-            if (intervals[i][0] < intervals[i-1][1]) {
+            if (intervals[i][0] < intervals[i-1][1]) { // 后面区间的开始时间小于前一个的结束时间即存在重叠
                 return false;
             }
         }
