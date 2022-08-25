@@ -86,6 +86,8 @@ public:
 因此此处需要按照字符串的形式将数组读入，然后再来处理将其转换成数组
 参考代码如下:
 ```cpp
+// 这种读入会有bug 无法正确读取到2位的数字
+// 仅适用于读取单个的数字之类的结果
 vector<int> nums;
 string s;
 
@@ -95,6 +97,19 @@ for (int i = 0; i < s.size(); ++i) {
         nums.push_back(int(s[i]-'0'));
     } 
 } 
+
+// 正确且推荐的读取数据格式
+vector<int> nums;
+int temp;
+char c;
+cin >> c; // 读取无用字符'['
+while (cin >> temp) {
+    nums.push_back(temp);
+    cin >> c; // 读取 ','
+    if (c == ']') {
+        break;
+    }
+}
 ```
 
 

@@ -2,6 +2,7 @@
 
 using namespace std;
 
+// leetcode类似题解法 用栈记录路径
 class Solution {
 
 public:
@@ -32,6 +33,38 @@ public:
             stk.push_back(y);
             dfs(nodes, y, n);
             stk.pop_back(); // 栈顶出栈
+        }
+    }
+};
+
+// 和自己笔试时的思路一脉相承 不用记录路径 单纯计数
+// 😂笔试时自己就是这种思路,但是就是没有写出来
+// 讲道理,我的实现那里只是增加了visited数组来判断该节点是否被访问过,也没其他的变化亚
+class Solution2 {
+
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     * 计算dag 路径上起始到目的节点的路径数目
+     * @param nodes int整型vector<vector<>> 第 i 个数组中的单元都表示有向图中 i 号节点所能到达的下一些结点（译者注：有向图是有方向的，即规定了 a→b 你就不能从 b→a ），若为空，就是没有下一个节点了。
+     * @return int整型
+     */
+
+    int res = 0;
+    int DagPathNum(vector<vector<int>>& nodes) { 
+        dfs(nodes, 0);
+        return res;
+    }
+
+    // 辅函数
+    void dfs(vector<vector<int>>& nodes, int idx) {
+        if (nodes[idx].size() == 0) {
+            res++;
+            return;
+        }
+        for (auto& i : nodes[idx]) {
+            dfs(nodes, i);
         }
     }
 };
@@ -152,7 +185,7 @@ int main() {
     // // 读入数据
     // for (int i = 0; i < nodes.size(); ++i) {
     //     for (int j = 0; j < ) }
-    Solution solution;
+    Solution2 solution;
     int res = solution.DagPathNum(nodes);
     cout << res << endl;
     // 遍历ndoes

@@ -4,19 +4,29 @@
 using namespace std;
 
 int main() {
+    // // 这种读取数据 [4,1,2,7] 格式会有潜在bug,无法正常读取2位数字
+    // vector<int> nums;
+    // string s;
+    // cin >> s;
+    // for (int i = 0; i < s.size(); ++i) {
+    //     if (i % 2 == 1) {
+    //         nums.push_back(int(s[i]-'0'));
+    //     } 
+    // } 
+
+    // [4,1,2,7]
     vector<int> nums;
-    string s;
- 
-    cin >> s;
+    int temp;
+    char c;
+    cin >> c; // 读取无用字符'['
+    while (cin >> temp) {
+        nums.push_back(temp);
+        cin >> c; // 读取 ','
+        if (c == ']') {
+            break;
+        }
+    }
 
-    // char temp;
-
-    for (int i = 0; i < s.size(); ++i) {
-        if (i % 2 == 1) {
-            // auto temp = s[i];
-            nums.push_back(int(s[i]-'0'));
-        } 
-    } 
     // int res = 0;
 
     // 核心函数
