@@ -45,7 +45,7 @@ public:
             int area = min(height[l], height[r]) * (r - l); // 水量计算公式
             ans = max(ans, area); // 更新max
             if (height[l] <= height[r]) {
-                ++l;
+                ++l; // 因为装水取决于低的那一侧的高度，因此更新时需要移动低侧的下标
             } else {
                 --r;
             }
