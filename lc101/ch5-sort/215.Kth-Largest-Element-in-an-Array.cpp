@@ -294,3 +294,24 @@ int findKthLargest(vector<int>& nums, int k) {
         return first;
     }
 };
+
+// 堆排序+借助优先队列的解法
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        priority_queue<int, vector<int>, greater<>> q;
+        for (auto& num : nums) {
+            if (q.size() < k) {
+                q.push(num);
+            } else if (q.top() < num) {
+                q.pop();
+                q.push(num);
+            }
+        }
+        return q.top();
+    }
+};
+/*
+解题思路：维护一个长度为k的优先队列(小根堆)，使之前遍历过的最大的k个元素按照从小到大排列，
+不断地更新，最后头元素即是第k大
+*/
