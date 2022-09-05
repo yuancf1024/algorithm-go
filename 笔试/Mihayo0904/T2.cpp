@@ -43,6 +43,8 @@ sswfwsf
 
 2022-09-05复盘
 要考虑消除之后，后面的那个能不能和前面的一个继续消除，用栈清晰明了。
+
+还是题目没有真正读懂，同时题目刷得不够多，所以没有想出这里的问题。
 */
 
 #include <bits/stdc++.h>
@@ -55,16 +57,29 @@ int main() {
     string s;
     cin >> s;
 
-    // 核心代码
+    // 核心代码 直接暴力搜索
+    // ll n = s.length();
+    // ll res = 0;
+    // for (ll i = 0; i < n - 1; i+=2) {
+    //     if ((s[i] == 'f' && s[i+1] == 'w') || (s[i] == 'w' && s[i+1] == 'f')) {
+            
+    //         res += 2;
+    //     }
+    // }
+
+    // 用栈
     ll n = s.length();
     ll res = 0;
-    for (ll i = 0; i < n - 1; i+=2) {
-        if ((s[i] == 'f' && s[i+1] == 'w') || (s[i] == 'w' && s[i+1] == 'f')) {
-            
+    stack<char> stack;
+    stack.push(s[0]);
+    for (int i = 1; i < n - 1; ++i) {
+        if (!stack.empty() && (stack.top() == 'f' && s[i] == 'w') || (stack.top() == 'w' && s[i] == 'f')) {
             res += 2;
+            stack.pop();
+        } else {
+            stack.push(s[i]);
         }
     }
-
     cout << res << endl;
     return 0;
 }
