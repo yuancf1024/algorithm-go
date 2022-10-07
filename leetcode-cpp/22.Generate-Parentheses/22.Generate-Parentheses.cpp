@@ -14,6 +14,10 @@
 1 <= n <= 8
 */
 
+#include <bits/stdc++.h>
+
+using namespace std;
+
 // 暴力法 参考leetcode
 class Solution {
 private:
