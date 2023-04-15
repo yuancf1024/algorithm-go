@@ -86,7 +86,7 @@ public:
 };
 
 // 简化版
-class Solution {
+class Solution1 {
 public:
     int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
         int n = startTime.size();
