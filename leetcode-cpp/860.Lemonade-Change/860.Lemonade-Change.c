@@ -89,7 +89,7 @@ int main() {
     int billsSize = 5;
     int bills[5] = {5, 5, 5, 10, 20};
 
-    bool res = lemonadeChange(bills, billsSize);
+    bool res = lemonadeChange1(bills, billsSize);
 
     printf("%d\n", res);
 
