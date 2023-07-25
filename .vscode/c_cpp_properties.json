@@ -13,10 +13,10 @@
                 "/usr/include"
             ],
             "defines": [],
-            "compilerPath": "/usr/bin/gcc",
+            "compilerPath": "/usr/bin/g++",
             "cStandard": "gnu11",
             "cppStandard": "gnu++11",
-            "intelliSenseMode": "linux-gcc-x64"
+            "intelliSenseMode": "linux-g++-x64"
         }
     ],
     "version": 4
