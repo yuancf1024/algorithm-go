@@ -61,11 +61,29 @@ void print_binary_tree(TreeNode* root) {
     }
 }
 
+// 前序打印打印二叉树
+void preOrder(TreeNode* root, vector<int>& res) {
+    if (root == NULL) {
+        res.push_back(-1);
+    } else {
+        res.push_back(root->val);
+        preOrder(root->left, res);
+        preOrder(root->right, res);
+    }
+}
+
 int main() {
     // 注意本代码没有考虑输入异常数据的情况
     // 用 -1 来表示 NULL
     vector<int> vec = {4, 1, 6, 0, 2, 5, 7, -1, -1, -1, 3, -1, -1, -1, 8};
     TreeNode* root = construct_binary_tree(vec);
-    print_binary_tree(root);
+    // print_binary_tree(root);
+    vector<int> res;
+    preOrder(root, res);
+    // 打印
+    
+    for (auto& x : res) {
+        cout << x << " ";
+    }
     return 0;
 }

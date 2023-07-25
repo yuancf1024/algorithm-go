@@ -98,138 +98,145 @@
 
 // 参考牛客大佬@牛客用户xwybs
 // bfs的时候上下左右找到底或者找到障碍物或者宝箱就行
+// #include <bits/stdc++.h>
+
+// using namespace std;
+
+// // 检查是否碰到障碍物or宝箱、是否出界
+// bool check(int x, int y, int n, int m, vector<vector<char>>& map) {
+//     // 是否出界
+//     if (x < 1 || x > n || y < 1 || y > m) {
+//         return false;
+//     }
+//     // 是否遇到宝箱
+//     if (map[x][y] == '@') {
+//         return true;
+//     }
+//     // 遇到障碍物
+//     return false;
+// }
+
+// int main() {
+//     int n, m;
+//     cin >> n >> m;
+//     vector<vector<char>> map(n + 1, vector<char>(m + 1));
+//     vector<vector<bool>> visited(n + 1, vector<bool>(m + 1, false));
+//     for (int i = 1; i <= n; ++i) {
+//         for (int j = 1; j <= m; ++j) {
+//             cin >> map[i][j];
+//         }
+//     }
+
+//     // 核心代码
+//     queue<pair<int, int>> q;
+//     q.push(make_pair(1, 1)); // 初始位置
+//     visited[1][1] = true;
+//     int res = 0;
+//     bool getBox = false;
+
+//     while (!q.empty()) {
+//         int size = q.size();
+//         for (int i = 0; i < size; ++i) {
+//             auto now = q.front();
+//             int now_x = now.first, now_y = now.second;
+//             q.pop();
+//             // check
+//             if (check(now_x-1,now_y,n,m,map) 
+//             || check(now_x+1,now_y,n,m,map)
+//             || check(now_x,now_y-1,n,m,map)
+//             || check(now_x,now_y+1,n,m,map)) {
+//                 cout << res << endl;
+//                 return 0;
+//             }
+//             // 四个方向
+//             // 上
+//             for (int x = now_x - 1; x > 0;--x) {
+//                 // 向上的过程中遇到障碍物直接跳出循环
+//                 if (map[x][now_y] == '#') {
+//                     break;
+//                 }
+//                 // 到达上边界，将该点入队同时标记已访问
+//                 if (x == 1 && !visited[x][now_y]) {
+//                     q.push(make_pair(x, now_y));
+//                     visited[x][now_y] = true;
+//                 } else if (x > 1 && map[x-1][now_y] == '#' && !visited[x][now_y]) { // 上面一个点是障碍物，将该点入队同时标记已访问
+//                     q.push(make_pair(x, now_y));
+//                     visited[x][now_y] = true;
+//                     break; // 跳出循环(换个方向遍历)
+//                 } else if (x > 1 && map[x-1][now_y] == '@' && !visited[x][now_y]) { // 上面一个点是宝箱，直接+1输出结果，结束程序
+//                     cout << res + 1 << endl;
+//                     return 0;
+//                 }
+//             }
+
+//             // 下
+//             for (int x = now_x + 1; x <= n;++x) {
+//                 // 向下的过程中遇到障碍物直接跳出循环
+//                 if (map[x][now_y] == '#') {
+//                     break;
+//                 }
+//                 // 到达下边界，将该点入队同时标记已访问
+//                 if (x == n && !visited[x][now_y]) {
+//                     q.push(make_pair(x, now_y));
+//                     visited[x][now_y] = true;
+//                 } else if (x < n && map[x+1][now_y] == '#' && !visited[x][now_y]) { // 下面一个点是障碍物，将该点入队同时标记已访问
+//                     q.push(make_pair(x, now_y));
+//                     visited[x][now_y] = true;
+//                     break; // 跳出循环(换个方向遍历)
+//                 } else if (x < n && map[x+1][now_y] == '@' && !visited[x][now_y]) { // 下面一个点是宝箱，直接+1输出结果，结束程序
+//                     cout << res + 1 << endl;
+//                     return 0;
+//                 }
+//             }
+//             // 左
+//             for (int y = now_y - 1; y > 0;--y) {
+//                 // 向左的过程中遇到障碍物直接跳出循环
+//                 if (map[now_x][y] == '#') {
+//                     break;
+//                 }
+//                 // 到达左边界，将该点入队同时标记已访问
+//                 if (y == 1 && !visited[now_x][y]) {
+//                     q.push(make_pair(now_x, y));
+//                     visited[now_x][y] = true;
+//                 } else if (y > 1 && map[now_x][y-1] == '#' && !visited[now_x][y-1]) { // 左面一个点是障碍物，将该点入队同时标记已访问
+//                     q.push(make_pair(now_x, y));
+//                     visited[now_x][y] = true;
+//                     break; // 跳出循环(换个方向遍历)
+//                 } else if (y > 1 && map[now_x][y-1] == '@' && !visited[now_x][y-1]) { // 左面一个点是宝箱，直接+1输出结果，结束程序
+//                     cout << res + 1 << endl;
+//                     return 0;
+//                 }
+//             }
+//             // 右
+//             for (int y = now_y + 1; y <= m; ++y) {
+//                 // 向右的过程中遇到障碍物直接跳出循环
+//                 if (map[now_x][y] == '#') {
+//                     break;
+//                 }
+//                 // 到达右边界，将该点入队同时标记已访问
+//                 if (y == m && !visited[now_x][y]) {
+//                     q.push(make_pair(now_x, y));
+//                     visited[now_x][y] = true;
+//                 } else if (y < m && map[now_x][y+1] == '#' && !visited[now_x][y+1]) { // 右面一个点是障碍物，将该点入队同时标记已访问
+//                     q.push(make_pair(now_x, y));
+//                     visited[now_x][y] = true;
+//                     break; // 跳出循环(换个方向遍历)
+//                 } else if (y < m && map[now_x][y+1] == '@' && !visited[now_x][y+1]) { // 右面一个点是宝箱，直接+1输出结果，结束程序
+//                     cout << res + 1 << endl;
+//                     return 0;
+//                 }
+//             }
+//         }
+//         res++;
+//     }
+
+//     cout << "-1" << endl;
+//     return 0;
+// }
+
+// 参考牛客大佬@牛客775465491号
+// DP
 #include <bits/stdc++.h>
 
 using namespace std;
 
-// 检查是否碰到障碍物or宝箱、是否出界
-bool check(int x, int y, int n, int m, vector<vector<char>>& map) {
-    // 是否出界
-    if (x < 1 || x > n || y < 1 || y > m) {
-        return false;
-    }
-    // 是否遇到宝箱
-    if (map[x][y] == '@') {
-        return true;
-    }
-    // 遇到障碍物
-    return false;
-}
-
-int main() {
-    int n, m;
-    cin >> n >> m;
-    vector<vector<char>> map(n + 1, vector<char>(m + 1));
-    vector<vector<bool>> visited(n + 1, vector<bool>(m + 1, false));
-    for (int i = 1; i <= n; ++i) {
-        for (int j = 1; j <= m; ++j) {
-            cin >> map[i][j];
-        }
-    }
-
-    // 核心代码
-    queue<pair<int, int>> q;
-    q.push(make_pair(1, 1)); // 初始位置
-    visited[1][1] = true;
-    int res = 0;
-    bool getBox = false;
-
-    while (!q.empty()) {
-        int size = q.size();
-        for (int i = 0; i < size; ++i) {
-            auto now = q.front();
-            int now_x = now.first, now_y = now.second;
-            q.pop();
-            // check
-            if (check(now_x-1,now_y,n,m,map) 
-            || check(now_x+1,now_y,n,m,map)
-            || check(now_x,now_y-1,n,m,map)
-            || check(now_x,now_y+1,n,m,map)) {
-                cout << res << endl;
-                return 0;
-            }
-            // 四个方向
-            // 上
-            for (int x = now_x - 1; x > 0;--x) {
-                // 向上的过程中遇到障碍物直接跳出循环
-                if (map[x][now_y] == '#') {
-                    break;
-                }
-                // 到达上边界，将该点入队同时标记已访问
-                if (x == 1 && !visited[x][now_y]) {
-                    q.push(make_pair(x, now_y));
-                    visited[x][now_y] = true;
-                } else if (x > 1 && map[x-1][now_y] == '#' && !visited[x][now_y]) { // 上面一个点是障碍物，将该点入队同时标记已访问
-                    q.push(make_pair(x, now_y));
-                    visited[x][now_y] = true;
-                    break; // 跳出循环(换个方向遍历)
-                } else if (x > 1 && map[x-1][now_y] == '@' && !visited[x][now_y]) { // 上面一个点是宝箱，直接+1输出结果，结束程序
-                    cout << res + 1 << endl;
-                    return 0;
-                }
-            }
-
-            // 下
-            for (int x = now_x + 1; x <= n;++x) {
-                // 向下的过程中遇到障碍物直接跳出循环
-                if (map[x][now_y] == '#') {
-                    break;
-                }
-                // 到达下边界，将该点入队同时标记已访问
-                if (x == n && !visited[x][now_y]) {
-                    q.push(make_pair(x, now_y));
-                    visited[x][now_y] = true;
-                } else if (x < n && map[x+1][now_y] == '#' && !visited[x][now_y]) { // 下面一个点是障碍物，将该点入队同时标记已访问
-                    q.push(make_pair(x, now_y));
-                    visited[x][now_y] = true;
-                    break; // 跳出循环(换个方向遍历)
-                } else if (x < n && map[x+1][now_y] == '@' && !visited[x][now_y]) { // 下面一个点是宝箱，直接+1输出结果，结束程序
-                    cout << res + 1 << endl;
-                    return 0;
-                }
-            }
-            // 左
-            for (int y = now_y - 1; y > 0;--y) {
-                // 向左的过程中遇到障碍物直接跳出循环
-                if (map[now_x][y] == '#') {
-                    break;
-                }
-                // 到达左边界，将该点入队同时标记已访问
-                if (y == 1 && !visited[now_x][y]) {
-                    q.push(make_pair(now_x, y));
-                    visited[now_x][y] = true;
-                } else if (y > 1 && map[now_x][y-1] == '#' && !visited[now_x][y-1]) { // 左面一个点是障碍物，将该点入队同时标记已访问
-                    q.push(make_pair(now_x, y));
-                    visited[now_x][y] = true;
-                    break; // 跳出循环(换个方向遍历)
-                } else if (y > 1 && map[now_x][y-1] == '@' && !visited[now_x][y-1]) { // 左面一个点是宝箱，直接+1输出结果，结束程序
-                    cout << res + 1 << endl;
-                    return 0;
-                }
-            }
-            // 右
-            for (int y = now_y + 1; y <= m; ++y) {
-                // 向右的过程中遇到障碍物直接跳出循环
-                if (map[now_x][y] == '#') {
-                    break;
-                }
-                // 到达右边界，将该点入队同时标记已访问
-                if (y == m && !visited[now_x][y]) {
-                    q.push(make_pair(now_x, y));
-                    visited[now_x][y] = true;
-                } else if (y < m && map[now_x][y+1] == '#' && !visited[now_x][y+1]) { // 右面一个点是障碍物，将该点入队同时标记已访问
-                    q.push(make_pair(now_x, y));
-                    visited[now_x][y] = true;
-                    break; // 跳出循环(换个方向遍历)
-                } else if (y < m && map[now_x][y+1] == '@' && !visited[now_x][y+1]) { // 右面一个点是宝箱，直接+1输出结果，结束程序
-                    cout << res + 1 << endl;
-                    return 0;
-                }
-            }
-        }
-        res++;
-    }
-
-    cout << "-1" << endl;
-    return 0;
-}
