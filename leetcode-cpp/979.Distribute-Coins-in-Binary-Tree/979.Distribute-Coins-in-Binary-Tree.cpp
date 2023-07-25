@@ -1,7 +1,7 @@
 /**
  * @file 979.Distribute-Coins-in-Binary-Tree.cpp
  * @author your name (you@domain.com)
- * @brief leetcode-979. 在二叉树中分配硬币
+ * @brief leetcode-979.在二叉树中分配硬币
 
  * @version 0.1
  * @date 2023-07-14
