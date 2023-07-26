@@ -27,12 +27,8 @@ func main() {
 	}
 
 	var num1 int
-	
-	
 
 	res = num - num1
 
 	fmt.Println(res % 100003)
 }
-
-
