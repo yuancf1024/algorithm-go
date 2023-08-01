@@ -71,7 +71,12 @@ public:
 };
 
 int main() {
-    vector<int> nums = {5, 19, 8, 1};
+    // vector<int> nums = {5, 19, 8, 1};
+    vector <int> nums;
+    nums.push_back(5);
+    nums.push_back(19);
+    nums.push_back(8);
+    nums.push_back(1);
 
     int res = Solution().halveArray(nums);
 
