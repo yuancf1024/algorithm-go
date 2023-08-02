@@ -7,13 +7,13 @@
             "command": "clang++",
             "args": [
                 "${file}",
+                "-std=c++11",
+				"-stdlib=libc++",
                 "-o",
                 "${fileDirname}/bin/${fileBasenameNoExtension}",
                 "-g",
                 "-Wall",
-                "-fexec-charset=UTF-8",
-                "-std=c++11",
-				"-stdlib=libc++"
+                "-fexec-charset=UTF-8"
             ],
             "group": "build",
             "presentation": {
@@ -50,7 +50,8 @@
                 "${file}",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}",
-				"-std=c++11"
+				"-std=c++11",
+                "-stdlib=libc++"
             ],
             "options": {
                 "cwd": "${fileDirname}"
