@@ -40,6 +40,7 @@
 1 <= fronts[i] <= 2000
 1 <= backs[i] <= 2000
  */
+#include <algorithm>
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -47,15 +48,42 @@ using namespace std;
 class Solution {
 public:
     int flipgame(vector<int>& fronts, vector<int>& backs) {
-        int ans = 110;
+        int ans = 3000, n = fronts.size();
+        unordered_set<int> same;
+        for (int i = 0; i < n; ++i) {
+            if (fronts[i] == backs[i]) {
+                same.insert(fronts[i]);
+            }
+        }
+        for (int &x : fronts) {
+            if (x < ans && same.count(x) == 0) {
+                ans = x;
+            }
+        }
+        for (int &x : backs) {
+            if (x < ans && same.count(x) == 0) {
+                ans = x;
+            }
+        }
 
-        return ans;
+        return ans % 3000;
     }
 };
 
 int main() {
-    vector<int> fronts = {1,2,4,4,7};
-    vector<int> backs = {1,3,4,1,3};
+    // 针对 Non-aggregate type 'vector<int>' cannot be initialized with an initializer listclang
+    // 可采用如下两种方法解决
+    // push_back
+    vector<int> fronts; // = {1,2,4,4,7};
+    fronts.push_back(1);
+    fronts.push_back(2);
+    fronts.push_back(4);
+    fronts.push_back(4);
+    fronts.push_back(7);
+    // 使用assign()函数将数组的范围复制到vector中
+    vector<int> backs;
+    int arr[] = {1,3,4,1,3};
+    backs.assign(arr, arr + sizeof(arr) / sizeof(arr[0]));
 
     int res = Solution().flipgame(fronts, backs);
 
@@ -63,3 +91,26 @@ int main() {
 
     return 0;
 }
+
+/**
+ * @brief 参考leetcode官方题解
+ * 方法一：哈希集
+思路与算法
+
+如果一张卡片正反两面有相同的数字，
+那么这张卡片无论怎么翻转，正面都是这个数字，
+这个数字即不能是最后所选的数字x。
+
+按照这个思路，我们首先遍历所有卡片，
+如果卡片上的两个数字相同，则加入哈希集合same中，
+除此集合外的所有数字，都可以被选做x， 
+我们只需要再次遍历所有数字，找到最小值即可。
+
+最后，我们返回找到的最小值，如果没有则返回0。
+
+复杂度分析
+
+时间复杂度：O(n)，其中 n 是卡片个数。
+
+空间复杂度：O(n)，其中 n 是卡片个数。
+ */
