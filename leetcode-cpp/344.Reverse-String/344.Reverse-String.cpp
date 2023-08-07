@@ -30,6 +30,10 @@ s[i] 都是 ASCII 码表中的可打印字符
 
  */
 
+#include <bits/stdc++.h>
+
+using namespace std;
+
 // 自己实现 双指针
 class Solution {
 public:
@@ -45,7 +49,7 @@ public:
 };
 
 // 参考代码随想录
-class Solution {
+class Solution1 {
 public:
     void reverseString(vector<char>& s) {
         for (int i = 0, j = s.size() - 1; i < s.size() / 2; i++, j--) {
@@ -53,6 +57,32 @@ public:
         }
     }
 };
+
+// 2023-08更精细化的实现
+class Solution2 {
+public:
+    void reverseString(vector<char>& s) {
+        int n = s.size();
+        for (int i = 0, j = n-1; i < j; i++, j--) {
+            char t;
+            t = s[i];
+            s[i] = s[j];
+            s[j] = t;
+        }
+    }
+};
+
+int main() {
+    vector<char> s = {'h', 'e', 'l', 'l', 'o'};
+
+    Solution2().reverseString(s);
+    // 打印s
+    for (auto & a : s) {
+        cout << a << endl;
+    }
+
+    return 0;
+}
 
 /*
 思路
