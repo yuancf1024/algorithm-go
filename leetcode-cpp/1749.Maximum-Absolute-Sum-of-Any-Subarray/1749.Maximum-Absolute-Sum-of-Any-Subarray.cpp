@@ -62,11 +62,32 @@ public:
 
         return max(positiveMax, -negativeMin);
     }
+
+    // 方法1的易理解版本
+    // 取最大子数组和和最小子数组和中绝对值大的即可
+    int maxAbsoluteSum1(vector<int>& nums) {
+        int n = nums.size();
+        // dp0[i]表示以nums[i]结尾的子数组的最大和
+        // dp1[i]表示以nums[i]结尾的子数组的最小和
+        vector<int> dp0(n, 0), dp1(n, 0);
+        dp0[0] = nums[0];
+        dp1[0] = nums[0];
+
+        for (int i = 1; i < n; ++i) {
+            dp0[i] = max(dp0[i-1] + nums[i], nums[i]);
+            dp1[i] = min(dp1[i-1] + nums[i], nums[i]);
+        }
+
+        int maxSum = *max_element(dp0.begin(), dp0.end());
+        int minSum = *min_element(dp1.begin(), dp1.end());
+
+        return max(abs(maxSum), abs(minSum));
+    }
 };
 
 int main() {
     vector<int> nums = {1,-3,2,3,-4};
-    int res = Solution().maxAbsoluteSum(nums);
+    int res = Solution().maxAbsoluteSum1(nums);
     cout << res << endl;
     return 0;
 }
