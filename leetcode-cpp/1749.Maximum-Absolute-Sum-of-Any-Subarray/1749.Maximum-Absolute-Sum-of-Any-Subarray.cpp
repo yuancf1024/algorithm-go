@@ -83,11 +83,18 @@ public:
 
         return max(abs(maxSum), abs(minSum));
     }
+
+    // 方法二：前缀和
+    int maxAbsoluteSum2(vector<int>& nums) {
+        partial_sum(nums.begin(), nums.end(), nums.begin());
+        auto [a, b] = minmax_element(nums.begin(), nums.end());
+        return max(*b, 0) - min(0, *a);
+    }
 };
 
 int main() {
     vector<int> nums = {1,-3,2,3,-4};
-    int res = Solution().maxAbsoluteSum1(nums);
+    int res = Solution().maxAbsoluteSum2(nums);
     cout << res << endl;
     return 0;
 }
@@ -117,4 +124,15 @@ int main() {
 时间复杂度：O(n)。只需要遍历数组一遍。
 
 空间复杂度：O(1)。仅使用常数空间。
+
+方法二：前缀和
+由于子数组和等于两个前缀和的差，
+那么取前缀和中的最大值与最小值，
+它俩的差就是答案。
+
+如果最大值在最小值右边，
+那么算的是最大子数组和。
+
+如果最大值在最小值左边，
+那么算的是最小子数组和的绝对值（相反数）。
  */
