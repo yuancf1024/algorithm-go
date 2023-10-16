@@ -49,11 +49,17 @@ public:
             ++freq[num];
         }
         vector<int> ans;
-        for (const auto& [num, occ] : freq) {
-            if (occ == 1) {
-                ans.push_back(num);
+        // for (const auto& [num, occ] : freq) {
+        //     if (occ == 1) {
+        //         ans.push_back(num);
+        //     }
+        // }
+        // 遍历哈希表
+        for (auto & num : freq) {
+            if (num.second == 1) {
+                ans.push_back(num.first);
             }
-        }
+        } 
         return ans;
     }
 };
