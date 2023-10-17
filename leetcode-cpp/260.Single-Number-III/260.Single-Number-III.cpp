@@ -37,6 +37,7 @@
  */
 
 #include <bits/stdc++.h>
+#include <climits>
 
 using namespace std;
 
@@ -62,11 +63,32 @@ public:
         } 
         return ans;
     }
+
+    // 方法2:位运算
+    vector<int> singleNumber_v2(vector<int>& nums) {
+        int xorsum = 0;
+        for (int num : nums) {
+            xorsum ^= num;
+        }
+
+        // 防止溢出
+        int lsb = (xorsum == INT_MIN ? xorsum : xorsum & (-xorsum));
+        int type1 = 0, type2 = 0;
+        for (int num : nums) {
+            if (num & lsb) {
+                type1 ^= num;
+            }
+            else {
+                type2 ^= num;
+            }
+        }
+        return {type1, type2};
+    }
 };
 
 int main() {
     vector<int> nums = {1,2,1,3,2,5};
-    vector<int> res = Solution().singleNumber(nums);
+    vector<int> res = Solution().singleNumber_v2(nums);
     // 打印结果
     for (auto& num : res) {
         cout << num << " ";
@@ -90,6 +112,6 @@ int main() {
 
 空间复杂度：O(n)，即为哈希映射需要使用的空间。
 
-
+方法2思路详见：https://leetcode.cn/problems/single-number-iii/solutions/587516/zhi-chu-xian-yi-ci-de-shu-zi-iii-by-leet-4i8e/?envType=daily-question&envId=2023-10-16
 
  */
