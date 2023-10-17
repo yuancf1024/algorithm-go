@@ -24,6 +24,10 @@
 
  */
 
+#include <bits/stdc++.h>
+
+using namespace std;
+
 // 方法1：位运算
 class Solution {
 public:
@@ -37,7 +41,7 @@ public:
 };
 
 // 方法2：集合set
-class Solution {
+class Solution2 {
 public:
     int singleNumber(vector<int>& nums) { 
         unordered_set<int> s;
@@ -53,7 +57,7 @@ public:
 };
 
 // 方法3：哈希表
-class Solution {
+class Solution3 {
 public:
     int singleNumber(vector<int>& nums) {
         int res = 0;
@@ -71,7 +75,7 @@ public:
 };
 
 // 方法4：使用集合存储数组中的所有元素
-class Solution {
+class Solution4 {
 public:
     int singleNumber(vector<int>& nums) { 
         int setSum = 0, numsSum = 0;
@@ -87,6 +91,12 @@ public:
     }
 };
 
+int main() {
+    vector<int> nums = {4,1,2,1,2};
+    int res = Solution4().singleNumber(nums);
+    cout << res << endl;
+    return 0;
+}
 /**
  * @brief
  * 方法一：位运算
