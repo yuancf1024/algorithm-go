@@ -88,13 +88,41 @@ public:
         return ans / 2;
     }
 
-   
+    // 方法二：DFS
+    long long countPairs1(int n, vector<vector<int>>& edges) {
+        vector<int> g[n];
+        for (auto& e : edges) {
+            int a = e[0], b = e[1];
+            g[a].push_back(b);
+            g[b].push_back(a);
+        }
+        bool vis[n];
+        memset(vis, 0, sizeof(vis));
+        function<int(int)> dfs = [&](int i) {
+            if (vis[i]) {
+                return 0;
+            }
+            vis[i] = true;
+            int cnt = 1;
+            for (int j : g[i]) {
+                cnt += dfs(j);
+            }
+            return cnt;
+        };
+        long long ans = 0, s = 0;
+        for (int i = 0; i < n; ++i) {
+            int t = dfs(i);
+            ans += s * t;
+            s += t;
+        }
+        return ans;
+    }
 };
 
 int main() {
     int n = 3;
     vector<vector<int>> edges = {{0, 1}, {0, 2}, {1, 2}};
-    long long res = Solution().countPairs(n, edges);
+    long long res = Solution().countPairs1(n, edges);
     cout << res << endl;
     return 0;
 }
@@ -125,4 +153,16 @@ int main() {
 空间复杂度：O(n)。
 
 
+方法二：DFS
+
+对于无向图中的任意两个节点，如果它们之间存在一条路径，
+那么它们之间就是互相可达的。
+
+因此，我们可以通过深度优先搜索的方式，找出每一个连通分量中的节点个数 t，
+然后将当前连通分量中的节点个数 t 与之前所有连通分量中的节点个数 s 相乘，
+即可得到当前连通分量中的不可达点对数目 s×t，然后将 t 加到 s 中。
+继续搜索下一个连通分量，直到搜索完所有连通分量，即可得到答案。
+时间复杂度 O(n+m)，
+空间复杂度 O(n+m)。
+其中 n 和 m 分别是节点数和边数。
  */
