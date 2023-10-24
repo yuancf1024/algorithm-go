@@ -26,8 +26,14 @@
 
 */
 
+#include <bits/stdc++.h>
+
+using namespace std;
+
 class Solution {
 public:
+
+    // 参考代码随想录
     int rob(vector<int>& nums) {
         if (nums.size() == 0) // 输入数组没有元素
             return 0;
@@ -41,8 +47,32 @@ public:
         }
         return dp[nums.size() - 1];
     }
+
+    // 参考灵茶山艾府
+    // 递归搜索 + 保存计算结果 = 记忆化搜索
+    int rob_v1(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> memo(n, -1); // -1表示没有计算过
+        // dfs(i)表示从nums[0]到nums[i]最多能偷多少
+        function<int(int)> dfs = [&](int i) -> int {
+            if (i < 0) return 0; // 递归边界（没有房子）
+            if (memo[i] != -1) return memo[i]; // 前面计算过
+            return memo[i] = max(dfs(i-1), dfs(i - 2) + nums[i]);
+        };
+        return dfs(n - 1); // 从最后一个房子开始思考
+    }
+    /*
+    时间复杂度：O(n)，其中 n 为 nums 的长度。
+    空间复杂度：O(n)。
+    */
 };
 
+int main() {
+    vector<int> nums = {1,2,3,1};
+    int res = Solution().rob_v1(nums);
+    cout << res << endl;
+    return 0;
+}
 /* 参考代码随想录：
 DP解题步骤
 1. 确定dp数组（dp table）以及下标的含义
