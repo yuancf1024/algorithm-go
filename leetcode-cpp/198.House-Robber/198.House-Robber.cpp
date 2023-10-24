@@ -65,11 +65,37 @@ public:
     时间复杂度：O(n)，其中 n 为 nums 的长度。
     空间复杂度：O(n)。
     */
+
+    // 1:1 翻译成递推
+    int rob_v2(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> f(n + 2); // 初始化默认为0
+        for (int i = 0; i < n; ++i) {
+            f[i + 2] = max(f[i + 1], f[i] + nums[i]);
+        }
+        return f.back();
+    }
+    /**
+     * @brief 
+     * 时间复杂度：O(n)。其中 n 为 nums 的长度。
+        空间复杂度：O(n)。
+     */
+
+    // 空间优化
+    int rob_v3(vector<int>& nums) {
+        int f0 = 0, f1 = 0;
+        for (int x : nums) {
+            int new_f = max(f1, f0 + x);
+            f0 = f1;
+            f1 = new_f;
+        }
+        return f1;
+    }
 };
 
 int main() {
     vector<int> nums = {1,2,3,1};
-    int res = Solution().rob_v1(nums);
+    int res = Solution().rob_v3(nums);
     cout << res << endl;
     return 0;
 }
