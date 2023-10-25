@@ -42,6 +42,24 @@ i * i 的十进制表示的字符串可以分割成若干连续子字符串，�
 
 using namespace std;
 
+inline bool check1(int t, int x) {
+    if (t == x) return true;
+    int d = 10;
+    while (t >= d && t % d <= x) {
+        if (check1(t / d, x - (t % d))) return true;
+        d *= 10;
+    }
+    return false;
+}
+
+int f[1010];
+int _ = []() {
+    for (int i = 1; i < 1010; i++) {
+        f[i] = f[i-1];
+        if (check1(i * i, i)) f[i] += i * i;
+    }
+    return 0;
+}();
 class Solution {
 public:
     // 方法1:递归
@@ -62,11 +80,16 @@ public:
         }
         return ans;
     }
+
+    // 打表
+    int punishmentNumber_v2(int n) {
+        return f[n];
+    }
 };
 
 int main() {
-    int n = 10;
-    int res = Solution().punishmentNumber(n);
+    int n = 37;
+    int res = Solution().punishmentNumber_v2(n);
     cout << res << endl;
     return 0;
 }
@@ -85,5 +108,17 @@ int main() {
 
 时间复杂度：O(nlog⁡n^2)
 空间复杂度：O(log⁡n^2)
+
+方法2: 打表
+
+更进一步，对于 [1,x] 范围内的惩罚数必然包含了 [1,y]（其中 y<x）中的惩罚数。
+
+即多个样例之间必然存在重复计算，我们可通过「打表」进行预处理：
+定义 f[i]为 n=i时的答案（惩罚数），
+对于 f[i] 而言，起始为 f[i−1]，
+若数值 i 本身满足要求，则将 i×i累加到 f[i] 当中。
+
+时间复杂度：O(1)
+空间复杂度：O(C)，其中 C=1000
 
  */
