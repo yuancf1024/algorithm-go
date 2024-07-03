@@ -54,13 +54,30 @@ public:
         }
         return res;
     }
+
+    int sumOfTheDigitsOfHarshadNumber_v2(int x) {
+        int s = 0;
+        for (int y = x; y; y /= 10) {
+            s += y % 10;
+        }
+        return x % s ? -1 : s;
+    }
 };
 
 int main() {
     int x = 23;
-    int res = Solution().sumOfTheDigitsOfHarshadNumber(x);
+    int res = Solution().sumOfTheDigitsOfHarshadNumber_v2(x);
 
     cout << res << endl;
     return 0;
 
 }
+
+/**
+ * @brief leetcode官方更简洁的写法
+ * 方法一：模拟
+思路与算法
+计算 x 的数位之和 s，判断 x 是否能被 s 整除，
+若能，则是哈沙德数，返回 s，否则返回 −1。
+ * 
+ */
