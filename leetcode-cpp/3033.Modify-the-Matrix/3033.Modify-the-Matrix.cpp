@@ -68,12 +68,52 @@ public:
         }
         return answer;
     }
+
+    // leetcode官方题解
+    /**
+     * @brief 
+     * 思路使用列遍历，先扫一遍找到每一列的最大值，
+     * 再扫一遍把 −1 替换成这一列的最大值即可。
+     */
+    vector<vector<int>> modifiedMatrix_v2(vector<vector<int>>& matrix) {
+        int n = matrix.size(); // 行数
+        int m = matrix[0].size(); // 列数
+        for (int j = 0; j < m; j++) {
+            int zd = -1;
+            for (int i = 0; i < n; i++) {
+                zd = max(zd, matrix[i][j]);
+            }
+            for (int i = 0; i < n; i++) {
+                if (matrix[i][j] == -1) {
+                    matrix[i][j] = zd;
+                }
+            }
+        }
+        return matrix;
+    }
+
+    // 大佬@灵茶山艾府 简洁写法
+    vector<vector<int>> modifiedMatrix_v3(vector<vector<int>>& matrix) {
+        for (int j = 0; j < matrix[0].size(); j++) {
+            int mx = 0;
+            for (auto& row : matrix) {
+                mx = max(mx, row[j]);
+            }
+            for (auto& row : matrix) {
+                if (row[j] == -1) {
+                    row[j] = mx;
+                }
+            }
+        }
+        return matrix;
+    }
+
 };
 
 int main() {
     vector<vector<int>> matrix = {{1,2,-1}, {4,-1,6},{7,8,9}};
 
-    vector<vector<int>> res = Solution().modifiedMatrix(matrix);
+    vector<vector<int>> res = Solution().modifiedMatrix_v3(matrix);
 
     for (auto& x : res) {
         for (auto&y : x) {
